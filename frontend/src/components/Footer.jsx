@@ -5,42 +5,42 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-4 gap-8 mb-12">
-          <div>
-            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-10 sm:mb-12">
+          <div className="col-span-2 md:col-span-1">
+            <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
               Vishwajeet Banking
             </h3>
-            <p className="text-gray-400 mb-4">
+            <p className="text-gray-400 mb-4 text-sm sm:text-base">
               Your trusted banking partner since 2023. We provide a wide range of banking and financial services.
             </p>
           </div>
           <div>
-            <h4 className="text-lg font-bold mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              <li><a href="#home" className="text-gray-400 hover:text-blue-400 transition-colors">Home</a></li>
-              <li><a href="#about" className="text-gray-400 hover:text-blue-400 transition-colors">About</a></li>
-              <li><a href="#services" className="text-gray-400 hover:text-blue-400 transition-colors">Services</a></li>
-              <li><a href="#team" className="text-gray-400 hover:text-blue-400 transition-colors">Team</a></li>
-              <li><a href="#contact" className="text-gray-400 hover:text-blue-400 transition-colors">Contact</a></li>
+            <h4 className="text-sm sm:text-lg font-bold mb-3 sm:mb-4">Quick Links</h4>
+            <ul className="space-y-1 sm:space-y-2">
+              <li><a href="#home" className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm">Home</a></li>
+              <li><a href="#about" className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm">About</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm">Services</a></li>
+              <li><a href="#team" className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm">Team</a></li>
+              <li><a href="#contact" className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm">Contact</a></li>
             </ul>
           </div>
           <div>
-            <h4 className="text-lg font-bold mb-4">Services</h4>
-            <ul className="space-y-2">
-              <li><a href="#services" className="text-gray-400 hover:text-blue-400 transition-colors">AEPS</a></li>
-              <li><a href="#services" className="text-gray-400 hover:text-blue-400 transition-colors">Money Transfer</a></li>
-              <li><a href="#services" className="text-gray-400 hover:text-blue-400 transition-colors">Account Opening</a></li>
-              <li><a href="#services" className="text-gray-400 hover:text-blue-400 transition-colors">Insurance</a></li>
-              <li><a href="#services" className="text-gray-400 hover:text-blue-400 transition-colors">Fastag</a></li>
+            <h4 className="text-sm sm:text-lg font-bold mb-3 sm:mb-4">Services</h4>
+            <ul className="space-y-1 sm:space-y-2">
+              <li><a href="#services" className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm">AEPS</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm">Money Transfer</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm">Account Opening</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm">Insurance</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm">Fastag</a></li>
             </ul>
           </div>
           <div>
-            <h4 className="text-lg font-bold mb-4">Legal</h4>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Terms & Conditions</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Refund Policy</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Disclaimer</a></li>
+            <h4 className="text-sm sm:text-lg font-bold mb-3 sm:mb-4">Legal</h4>
+            <ul className="space-y-1 sm:space-y-2">
+              <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm">Privacy Policy</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm">Terms & Conditions</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm">Refund Policy</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm">Disclaimer</a></li>
             </ul>
           </div>
         </div>
