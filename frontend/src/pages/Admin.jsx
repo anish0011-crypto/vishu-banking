@@ -224,7 +224,7 @@ const Admin = () => {
             </div>
 
             {contentSubTab === 'hero' && (
-              <div className="bg-white p-6 rounded-xl shadow-md">
+              <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
                 <h2 className="text-xl font-bold mb-4">Hero Section</h2>
                 <div className="space-y-4">
                   <div>
@@ -277,7 +277,7 @@ const Admin = () => {
             )}
 
             {contentSubTab === 'about' && (
-              <div className="bg-white p-6 rounded-xl shadow-md">
+              <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
                 <h2 className="text-xl font-bold mb-4">About Section</h2>
                 <div className="space-y-4">
                   <div>
@@ -406,7 +406,7 @@ const Admin = () => {
             )}
 
             {contentSubTab === 'stats' && (
-              <div className="bg-white p-6 rounded-xl shadow-md">
+              <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
                 <h2 className="text-xl font-bold mb-4">Stats Section</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -468,11 +468,11 @@ const Admin = () => {
             )}
 
             {contentSubTab === 'services' && (
-              <div className="bg-white p-6 rounded-xl shadow-md">
+              <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
                 <h2 className="text-xl font-bold mb-4">Services</h2>
                 <div className="space-y-6">
                   {content?.services?.map((service, idx) => (
-                    <div key={idx} className="border p-4 rounded-lg">
+                    <div key={idx} className="border p-3 sm:p-4 rounded-lg">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-semibold">Service {idx+1}</h3>
                         <button onClick={() => removeArrayItem('services', idx)} className="bg-red-500 text-white px-3 py-1 rounded-lg">
@@ -647,11 +647,11 @@ const Admin = () => {
             )}
 
             {contentSubTab === 'partners' && (
-              <div className="bg-white p-6 rounded-xl shadow-md">
+              <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
                 <h2 className="text-xl font-bold mb-4">Partners</h2>
                 <div className="space-y-6">
                   {content?.partners?.map((partner, idx) => (
-                    <div key={idx} className="border p-4 rounded-lg">
+                    <div key={idx} className="border p-3 sm:p-4 rounded-lg">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-semibold">Partner {idx+1}</h3>
                         <button onClick={() => removeArrayItem('partners', idx)} className="bg-red-500 text-white px-3 py-1 rounded-lg">
@@ -808,11 +808,11 @@ const Admin = () => {
             )}
 
             {contentSubTab === 'team' && (
-              <div className="bg-white p-6 rounded-xl shadow-md">
+              <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
                 <h2 className="text-xl font-bold mb-4">Team Members</h2>
                 <div className="space-y-6">
                   {content?.team?.map((member, idx) => (
-                    <div key={idx} className="border p-4 rounded-lg">
+                    <div key={idx} className="border p-3 sm:p-4 rounded-lg">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-semibold">Member {idx+1}</h3>
                         <button onClick={() => removeArrayItem('team', idx)} className="bg-red-500 text-white px-3 py-1 rounded-lg">
@@ -958,11 +958,11 @@ const Admin = () => {
             )}
 
             {contentSubTab === 'testimonials' && (
-              <div className="bg-white p-6 rounded-xl shadow-md">
+              <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
                 <h2 className="text-xl font-bold mb-4">Testimonials</h2>
                 <div className="space-y-6">
                   {content?.testimonials?.map((testimonial, idx) => (
-                    <div key={idx} className="border p-4 rounded-lg">
+                    <div key={idx} className="border p-3 sm:p-4 rounded-lg">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-semibold">Testimonial {idx+1}</h3>
                         <button onClick={() => removeArrayItem('testimonials', idx)} className="bg-red-500 text-white px-3 py-1 rounded-lg">
@@ -1022,11 +1022,11 @@ const Admin = () => {
             )}
 
             {contentSubTab === 'gallery' && (
-              <div className="bg-white p-6 rounded-xl shadow-md">
+              <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
                 <h2 className="text-xl font-bold mb-4">Gallery</h2>
                 <div className="space-y-6">
                   {content?.gallery?.map((item, idx) => (
-                    <div key={idx} className="border p-4 rounded-lg">
+                    <div key={idx} className="border p-3 sm:p-4 rounded-lg">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-semibold">Item {idx+1}</h3>
                         <button onClick={() => removeArrayItem('gallery', idx)} className="bg-red-500 text-white px-3 py-1 rounded-lg">
@@ -1097,11 +1097,11 @@ const Admin = () => {
             )}
 
             {contentSubTab === 'faqs' && (
-              <div className="bg-white p-6 rounded-xl shadow-md">
+              <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
                 <h2 className="text-xl font-bold mb-4">FAQs</h2>
                 <div className="space-y-6">
                   {content?.faqs?.map((faq, idx) => (
-                    <div key={idx} className="border p-4 rounded-lg">
+                    <div key={idx} className="border p-3 sm:p-4 rounded-lg">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-semibold">FAQ {idx+1}</h3>
                         <button onClick={() => removeArrayItem('faqs', idx)} className="bg-red-500 text-white px-3 py-1 rounded-lg">
@@ -1152,11 +1152,11 @@ const Admin = () => {
             )}
 
             {contentSubTab === 'blogs' && (
-              <div className="bg-white p-6 rounded-xl shadow-md">
+              <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
                 <h2 className="text-xl font-bold mb-4">Blogs</h2>
                 <div className="space-y-6">
                   {content?.blogs?.map((blog, idx) => (
-                    <div key={idx} className="border p-4 rounded-lg">
+                    <div key={idx} className="border p-3 sm:p-4 rounded-lg">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-semibold">Blog {idx+1}</h3>
                         <button onClick={() => removeArrayItem('blogs', idx)} className="bg-red-500 text-white px-3 py-1 rounded-lg">
@@ -1257,11 +1257,11 @@ const Admin = () => {
             )}
 
             {contentSubTab === 'downloads' && (
-              <div className="bg-white p-6 rounded-xl shadow-md">
+              <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
                 <h2 className="text-xl font-bold mb-4">Downloads</h2>
                 <div className="space-y-6">
                   {content?.downloads?.map((download, idx) => (
-                    <div key={idx} className="border p-4 rounded-lg">
+                    <div key={idx} className="border p-3 sm:p-4 rounded-lg">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-semibold">Download {idx+1}</h3>
                         <button onClick={() => removeArrayItem('downloads', idx)} className="bg-red-500 text-white px-3 py-1 rounded-lg">
@@ -1348,12 +1348,12 @@ const Admin = () => {
 
         {activeTab === 'applications' && (
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6">Job Applications</h2>
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Job Applications</h2>
             <div className="space-y-4">
               {applications.map(app => (
-                <div key={app._id} className="bg-white p-6 rounded-xl shadow-md">
-                  <div className="flex flex-wrap justify-between items-start gap-2 mb-4">
-                    <h3 className="text-xl font-bold">{app.fullName}</h3>
+                <div key={app._id} className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
+                  <div className="flex flex-wrap justify-between items-start gap-2 mb-3 sm:mb-4">
+                    <h3 className="text-lg sm:text-xl font-bold">{app.fullName}</h3>
                     <span className="text-gray-500 text-sm">{new Date(app.createdAt).toLocaleString()}</span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
@@ -1372,12 +1372,12 @@ const Admin = () => {
 
         {activeTab === 'messages' && (
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6">Contact Messages</h2>
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Contact Messages</h2>
             <div className="space-y-4">
               {messages.map(msg => (
-                <div key={msg._id} className="bg-white p-6 rounded-xl shadow-md">
-                  <div className="flex flex-wrap justify-between items-start gap-2 mb-4">
-                    <h3 className="text-xl font-bold">{msg.name}</h3>
+                <div key={msg._id} className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
+                  <div className="flex flex-wrap justify-between items-start gap-2 mb-3 sm:mb-4">
+                    <h3 className="text-lg sm:text-xl font-bold">{msg.name}</h3>
                     <span className="text-gray-500 text-sm">{new Date(msg.createdAt).toLocaleString()}</span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">

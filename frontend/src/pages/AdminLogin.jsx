@@ -22,9 +22,9 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-100">
-      <div className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full">
-        <h1 className="text-3xl font-bold text-center mb-8">Admin Login</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-100 px-4">
+      <div className="bg-white p-5 sm:p-8 rounded-xl shadow-lg max-w-md w-full">
+        <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8">Admin Login</h1>
         {error && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">{error}</div>}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
