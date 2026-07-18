@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const auth = require('../middleware/auth');
 const Hero = require('../models/Hero');
 const About = require('../models/About');
@@ -13,10 +14,18 @@ const FAQ = require('../models/FAQ');
 const Blog = require('../models/Blog');
 const Download = require('../models/Download');
 
-// Initialize default content if not exists
+// Initialize default content ONLY if the DB is empty (runs once on first start)
 const initDefaultContent = async () => {
+  // If Hero already exists, skip seeding to preserve admin's changes
+  const existing = await Hero.findOne();
+  if (existing) {
+    console.log('Content already exists, skipping seed.');
+    return;
+  }
+
+  console.log('No content found — seeding default data...');
+
   // Hero Section
-  await Hero.deleteMany({});
   await new Hero({
     greeting: 'Welcome to',
     title: 'Vishwajeet Banking Point',
@@ -26,7 +35,6 @@ const initDefaultContent = async () => {
   }).save();
 
   // About Section
-  await About.deleteMany({});
   await new About({
     title: 'About Vishwajeet Banking Point',
     name: 'Vishwajeet Raj',
@@ -54,7 +62,6 @@ const initDefaultContent = async () => {
   }).save();
 
   // Stats
-  await Stats.deleteMany({});
   await new Stats({
     happyCustomers: 5000,
     teamMembers: 10,
@@ -65,7 +72,6 @@ const initDefaultContent = async () => {
   }).save();
 
   // Services
-  await Service.deleteMany({});
   await Service.insertMany([
     { name: 'AEPS', description: 'Aadhaar Enabled Payment System for easy cash withdrawal and balance inquiry.', imageUrl: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400', benefits: ['No card needed', '24x7 availability', 'Secure transactions'], documentsRequired: ['Aadhaar Card'], isFeatured: true, category: 'aeps' },
     { name: 'Micro ATM', description: 'Mini ATM service for small businesses and retailers.', imageUrl: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400', benefits: ['Low cost', 'Easy to use', 'High commission'], documentsRequired: ['Shop Proof', 'Aadhaar'], isFeatured: true, category: 'micro-atm' },
@@ -87,7 +93,6 @@ const initDefaultContent = async () => {
   ]);
 
   // Partners
-  await Partner.deleteMany({});
   await Partner.insertMany([
     { name: 'Airtel Payments Bank', logo: 'https://www.vishwajeetbanking.in/static/media/airtel.png', description: 'India\'s first payments bank with full banking license.', benefits: ['Zero balance account', 'Debit card', 'Insurance'], eligibility: ['Aadhaar required', 'Indian resident'], registrationProcess: ['Visit our office', 'Submit documents', 'Get activated'] },
     { name: 'Google Pay Business', logo: 'https://www.vishwajeetbanking.in/static/media/gpay.png', description: 'India\'s leading UPI payment platform.', benefits: ['Instant settlements', 'No charges', 'QR payments'], eligibility: ['Shop required', 'Bank account'], registrationProcess: ['Contact us', 'Submit proof', 'Get QR'] },
@@ -98,7 +103,6 @@ const initDefaultContent = async () => {
   ]);
 
   // Team
-  await TeamMember.deleteMany({});
   await TeamMember.insertMany([
     { name: 'Vishwajeet Raj', experience: '7+ Years', role: 'CEO & Founder', image: 'https://www.vishwajeetbanking.in/static/media/Vishwajeet.cd2645a1adccc400b219.jpg', socialLinks: { linkedin: '#', facebook: '#', instagram: '#' } },
     { name: 'Shashi Prakash Singh', experience: '5+ Years', role: 'Team Leader', image: 'https://www.vishwajeetbanking.in/static/media/shashi.9e7cbe23768d03a7617b.jpg', socialLinks: { linkedin: '#', facebook: '#' } },
@@ -114,7 +118,6 @@ const initDefaultContent = async () => {
   ]);
 
   // Testimonials
-  await Testimonial.deleteMany({});
   await Testimonial.insertMany([
     { name: 'Avinash Kumar Gupta', text: 'This company has an awesome team and dedicated staff. I am very impressed by their vision, hard work, outstanding performance, and wonderful teammates. Their reputation is well-earned.', image: 'https://www.vishwajeetbanking.in/static/media/avi.707509ef61ee47c0a972.jpg', rating: 5 },
     { name: 'Arpita Gupta', text: 'It\'s a rare thing to discover a bank that genuinely cares about the people. Vishwajeet banking point serves all kinds of banking services. They always showed me kindness, respect and a friendly smile. I can\'t recommend them enough for all your banking needs. You won\'t be disappointed.', image: 'https://www.vishwajeetbanking.in/static/media/arpita.20c6b95aef29e910bb9e.jpg', rating: 5 },
@@ -122,7 +125,6 @@ const initDefaultContent = async () => {
   ]);
 
   // Gallery
-  await Gallery.deleteMany({});
   await Gallery.insertMany([
     { title: 'Office Interior', category: 'office', imageUrl: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600', description: 'Our main office' },
     { title: 'Team Meeting', category: 'meetings', imageUrl: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600', description: 'Weekly team meeting' },
@@ -133,7 +135,6 @@ const initDefaultContent = async () => {
   ]);
 
   // FAQs
-  await FAQ.deleteMany({});
   await FAQ.insertMany([
     { question: 'What is AEPS?', answer: 'AEPS stands for Aadhaar Enabled Payment System. It allows you to withdraw cash, check balance, and transfer money using your Aadhaar card and fingerprint.', category: 'aeps' },
     { question: 'How to become a retailer?', answer: 'To become a retailer, you need to contact our team, submit your shop proof, ID, and complete the registration process.', category: 'retailer-id' },
@@ -148,7 +149,6 @@ const initDefaultContent = async () => {
   ]);
 
   // Blogs
-  await Blog.deleteMany({});
   await Blog.insertMany([
     { title: 'Complete Guide to AEPS', slug: 'complete-guide-to-aeps', excerpt: 'Learn everything about Aadhaar Enabled Payment System.', content: 'AEPS is a revolutionary payment system...', imageUrl: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600', category: 'Aadhaar Services', tags: ['AEPS', 'Banking', 'Digital India'], author: 'Vishwajeet Raj' },
     { title: 'How to Earn from Banking Services', slug: 'how-to-earn-from-banking-services', excerpt: 'Discover ways to earn high income as a banking retailer.', content: 'Becoming a banking retailer is a great way...', imageUrl: 'https://images.unsplash.com/photo-1554224154-26032ffc0d7?w=600', category: 'Business', tags: ['Retailer', 'Commission', 'Business'], author: 'Rajat Raj' },
@@ -156,7 +156,6 @@ const initDefaultContent = async () => {
   ]);
 
   // Downloads
-  await Download.deleteMany({});
   await Download.insertMany([
     { title: 'Retailer Application Form', description: 'Download and fill the retailer application form.', fileUrl: '#', fileType: 'pdf', category: 'forms' },
     { title: 'Company Brochure', description: 'Our complete company profile and services.', fileUrl: '#', fileType: 'pdf', category: 'brochure' },
@@ -166,7 +165,10 @@ const initDefaultContent = async () => {
   ]);
 };
 
-initDefaultContent();
+// Safe call: runs after MongoDB connects, never crashes the server
+mongoose.connection.once('open', () => {
+  initDefaultContent().catch(err => console.error('Seed error:', err.message));
+});
 
 // Get all content (public)
 router.get('/', async (req, res) => {

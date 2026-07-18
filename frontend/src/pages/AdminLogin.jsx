@@ -8,10 +8,12 @@ const AdminLogin = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/admin/login', { username, password });
+      const res = await axios.post(`${API_URL}/api/admin/login`, { username, password });
       localStorage.setItem('token', res.data.token);
       navigate('/admin');
     } catch (err) {

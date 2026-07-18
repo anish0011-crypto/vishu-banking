@@ -8,19 +8,30 @@ const auth = require('../middleware/auth');
 router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
-    let admin = await Admin.findOne({ username });
 
+    if (!username || !password) {
+      return res.status(400).json({ msg: 'Username and password are required' });
+    }
+
+    let admin = await Admin.findOne({ username });
+    let isNewAdmin = false;
+
+    // Auto-create default admin on first login if DB is empty
     if (!admin) {
       if (username === 'admin' && password === 'admin123') {
         admin = new Admin({ username, password });
         await admin.save();
+        isNewAdmin = true;
       } else {
         return res.status(400).json({ msg: 'Invalid credentials' });
       }
     }
 
-    const isMatch = await admin.comparePassword(password);
-    if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
+    // For existing admins, verify password via bcrypt
+    if (!isNewAdmin) {
+      const isMatch = await admin.comparePassword(password);
+      if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
+    }
 
     const payload = { admin: { id: admin.id } };
     jwt.sign(

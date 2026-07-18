@@ -3,6 +3,7 @@ import axios from 'axios';
 import FloatingButtons from '../components/FloatingButtons';
 
 function Home() {
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -33,7 +34,7 @@ function Home() {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/content');
+        const res = await axios.get(`${API_URL}/api/content`);
         setContent(res.data);
       } catch (err) {
         console.error('Error fetching content:', err);
@@ -47,7 +48,7 @@ function Home() {
   const handleJobSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/applications/jobs', jobForm);
+      await axios.post(`${API_URL}/api/applications/jobs`, jobForm);
       setJobMessage('Application submitted successfully!');
       setJobForm({ fullName: '', email: '', contactNumber: '', fullAddress: '', pinCode: '', details: '' });
       setTimeout(() => setJobMessage(''), 3000);
@@ -60,7 +61,7 @@ function Home() {
   const handleContactSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/applications/contact', contactForm);
+      await axios.post(`${API_URL}/api/applications/contact`, contactForm);
       setContactMessage('Message sent successfully!');
       setContactForm({ name: '', email: '', contactNumber: '', query: '' });
       setTimeout(() => setContactMessage(''), 3000);

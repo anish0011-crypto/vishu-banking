@@ -13,6 +13,7 @@ const Admin = () => {
   const [contentSubTab, setContentSubTab] = useState('hero');
   const navigate = useNavigate();
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -26,9 +27,9 @@ const Admin = () => {
   const fetchData = async () => {
     try {
       const [contentRes, appsRes, messagesRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/content'),
-        axios.get('http://localhost:5000/api/applications/jobs', { headers: { 'x-auth-token': token } }),
-        axios.get('http://localhost:5000/api/applications/contact', { headers: { 'x-auth-token': token } })
+        axios.get(`${API_URL}/api/content`),
+        axios.get(`${API_URL}/api/applications/jobs`, { headers: { 'x-auth-token': token } }),
+        axios.get(`${API_URL}/api/applications/contact`, { headers: { 'x-auth-token': token } })
       ]);
       setContent(contentRes.data);
       setApplications(appsRes.data);
@@ -47,7 +48,7 @@ const Admin = () => {
   const handleSave = async () => {
     setSaving(true);
     try {
-      await axios.put('http://localhost:5000/api/content', content, { headers: { 'x-auth-token': token } });
+      await axios.put(`${API_URL}/api/content`, content, { headers: { 'x-auth-token': token } });
       setMessage('Content saved successfully!');
       setTimeout(() => setMessage(''), 3000);
     } catch (err) {
@@ -123,10 +124,42 @@ const Admin = () => {
     navigate('/admin/login');
   };
 
+  // Upload a team member image and return the URL
+  const uploadTeamImage = async (file, idx) => {
+    const formData = new FormData();
+    formData.append('image', file);
+    try {
+      const res = await axios.post(`${API_URL}/api/upload/image`, formData, {
+        headers: { 'x-auth-token': token, 'Content-Type': 'multipart/form-data' }
+      });
+      updateArrayItem('team', idx, 'image', res.data.url);
+    } catch (err) {
+      console.error('Image upload failed:', err);
+      alert('Image upload failed. Please try again.');
+    }
+  };
+
+  // Upload a service image and return the URL
+  const uploadServiceImage = async (file, idx) => {
+    const formData = new FormData();
+    formData.append('image', file);
+    try {
+      const res = await axios.post(`${API_URL}/api/upload/image`, formData, {
+        headers: { 'x-auth-token': token, 'Content-Type': 'multipart/form-data' }
+      });
+      updateArrayItem('services', idx, 'imageUrl', res.data.url);
+    } catch (err) {
+      console.error('Image upload failed:', err);
+      alert('Image upload failed. Please try again.');
+    }
+  };
+
+  const [mobileTabOpen, setMobileTabOpen] = useState(false);
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-2xl text-blue-600">Loading...</div>
+        <div className="text-2xl text-blue-600 animate-pulse">Loading...</div>
       </div>
     );
   }
@@ -135,57 +168,59 @@ const Admin = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white shadow-md p-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Admin Panel</h1>
-        <button onClick={handleLogout} className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
+      {/* Top Header */}
+      <div className="bg-white shadow-md px-4 py-3 flex justify-between items-center sticky top-0 z-40">
+        <h1 className="text-lg sm:text-2xl font-bold text-gray-800">⚙️ Admin Panel</h1>
+        <button onClick={handleLogout} className="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-sm sm:text-base font-semibold">
           Logout
         </button>
       </div>
 
-      <div className="flex border-b bg-white">
-        <button 
-          onClick={() => setActiveTab('content')} 
-          className={`px-6 py-4 font-semibold ${activeTab === 'content' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-600'}`}
-        >
-          Content Management
-        </button>
-        <button 
-          onClick={() => setActiveTab('applications')} 
-          className={`px-6 py-4 font-semibold ${activeTab === 'applications' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-600'}`}
-        >
-          Job Applications
-        </button>
-        <button 
-          onClick={() => setActiveTab('messages')} 
-          className={`px-6 py-4 font-semibold ${activeTab === 'messages' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-600'}`}
-        >
-          Contact Messages
-        </button>
+      {/* Main Tabs — scrollable on mobile */}
+      <div className="bg-white border-b overflow-x-auto">
+        <div className="flex min-w-max sm:min-w-0">
+          {[['content','Content'], ['applications','Applications'], ['messages','Messages']].map(([val, label]) => (
+            <button
+              key={val}
+              onClick={() => setActiveTab(val)}
+              className={`px-4 sm:px-6 py-3 sm:py-4 font-semibold text-sm sm:text-base whitespace-nowrap transition-colors ${
+                activeTab === val ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-600 hover:text-blue-500'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="p-6">
+      <div className="p-3 sm:p-6">
         {activeTab === 'content' && (
           <div className="max-w-6xl mx-auto">
             {message && (
-              <div className={`p-4 rounded-lg mb-6 ${message.includes('success') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+              <div className={`p-3 sm:p-4 rounded-lg mb-4 sm:mb-6 text-sm sm:text-base ${
+                message.includes('success') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+              }`}>
                 {message}
               </div>
             )}
 
-            <div className="flex flex-wrap gap-2 mb-6">
-              {contentSubTabs.map(tab => (
-                <button
-                  key={tab}
-                  onClick={() => setContentSubTab(tab)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                    contentSubTab === tab 
-                      ? 'bg-blue-600 text-white' 
-                      : 'bg-gray-200 hover:bg-gray-300'
-                  }`}
-                >
-                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                </button>
-              ))}
+            {/* Sub-tab pills — horizontally scrollable on mobile */}
+            <div className="overflow-x-auto pb-2 mb-4 sm:mb-6">
+              <div className="flex gap-2 min-w-max sm:min-w-0 sm:flex-wrap">
+                {contentSubTabs.map(tab => (
+                  <button
+                    key={tab}
+                    onClick={() => setContentSubTab(tab)}
+                    className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg font-medium text-sm sm:text-base transition-all whitespace-nowrap ${
+                      contentSubTab === tab
+                        ? 'bg-blue-600 text-white shadow-md'
+                        : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+                    }`}
+                  >
+                    {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  </button>
+                ))}
+              </div>
             </div>
 
             {contentSubTab === 'hero' && (
@@ -477,15 +512,48 @@ const Admin = () => {
                             rows="2"
                           />
                         </div>
-                        <div>
-                          <label className="block text-sm font-medium mb-1">Image URL</label>
-                          <input 
-                            type="text" 
-                            placeholder="Image URL" 
-                            value={service.imageUrl || ''} 
-                            onChange={(e) => updateArrayItem('services', idx, 'imageUrl', e.target.value)} 
-                            className="w-full px-3 py-2 border rounded-lg"
-                          />
+                        <div className="md:col-span-2">
+                          <label className="block text-sm font-medium mb-2">Image</label>
+                          <div className="flex flex-wrap items-center gap-4">
+                            {service.imageUrl ? (
+                              <img
+                                src={service.imageUrl}
+                                alt="preview"
+                                className="w-20 h-20 rounded-lg object-cover border-2 border-blue-300 shadow"
+                                onError={(e) => { e.target.style.display = 'none'; }}
+                              />
+                            ) : (
+                              <div className="w-20 h-20 rounded-lg bg-gray-100 border-2 border-dashed border-gray-300 flex items-center justify-center text-gray-400 text-xs text-center">
+                                No Image
+                              </div>
+                            )}
+                            <div className="flex-1">
+                              <label
+                                htmlFor={`service-img-${idx}`}
+                                className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-300 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors text-sm font-medium"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                Choose Image
+                              </label>
+                              <input
+                                id={`service-img-${idx}`}
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={(e) => {
+                                  const file = e.target.files[0];
+                                  if (file) uploadServiceImage(file, idx);
+                                }}
+                              />
+                              {service.imageUrl && (
+                                <p className="mt-1 text-xs text-gray-500 truncate max-w-xs" title={service.imageUrl}>
+                                  {service.imageUrl.startsWith('http://localhost') ? '✅ Uploaded' : service.imageUrl.split('/').pop()}
+                                </p>
+                              )}
+                            </div>
+                          </div>
                         </div>
                         <div className="flex items-center gap-2">
                           <label className="text-sm font-medium">Featured</label>
@@ -782,15 +850,50 @@ const Admin = () => {
                             className="w-full px-3 py-2 border rounded-lg"
                           />
                         </div>
-                        <div>
-                          <label className="block text-sm font-medium mb-1">Image URL</label>
-                          <input 
-                            type="text" 
-                            placeholder="Image URL" 
-                            value={member.image || ''} 
-                            onChange={(e) => updateArrayItem('team', idx, 'image', e.target.value)} 
-                            className="w-full px-3 py-2 border rounded-lg"
-                          />
+                        <div className="md:col-span-2">
+                          <label className="block text-sm font-medium mb-2">Photo</label>
+                          <div className="flex flex-wrap items-center gap-4">
+                            {/* Preview */}
+                            {member.image ? (
+                              <img
+                                src={member.image}
+                                alt="preview"
+                                className="w-20 h-20 rounded-full object-cover border-2 border-blue-300 shadow"
+                                onError={(e) => { e.target.style.display = 'none'; }}
+                              />
+                            ) : (
+                              <div className="w-20 h-20 rounded-full bg-gray-100 border-2 border-dashed border-gray-300 flex items-center justify-center text-gray-400 text-xs text-center">
+                                No Photo
+                              </div>
+                            )}
+                            {/* File picker */}
+                            <div className="flex-1">
+                              <label
+                                htmlFor={`team-img-${idx}`}
+                                className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-300 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors text-sm font-medium"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                Choose Photo
+                              </label>
+                              <input
+                                id={`team-img-${idx}`}
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={(e) => {
+                                  const file = e.target.files[0];
+                                  if (file) uploadTeamImage(file, idx);
+                                }}
+                              />
+                              {member.image && (
+                                <p className="mt-1 text-xs text-gray-500 truncate max-w-xs" title={member.image}>
+                                  {member.image.startsWith('http://localhost') ? '✅ Uploaded' : member.image.split('/').pop()}
+                                </p>
+                              )}
+                            </div>
+                          </div>
                         </div>
                         <div>
                           <label className="block text-sm font-medium mb-1">LinkedIn</label>
@@ -1230,13 +1333,14 @@ const Admin = () => {
               </div>
             )}
 
-            <div className="mt-8">
-              <button 
-                onClick={handleSave} 
-                disabled={saving} 
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all"
+            {/* Sticky Save Button */}
+            <div className="mt-6 sm:mt-8 sticky bottom-4 z-30">
+              <button
+                onClick={handleSave}
+                disabled={saving}
+                className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold shadow-xl hover:shadow-2xl transition-all disabled:opacity-60 text-sm sm:text-base"
               >
-                {saving ? 'Saving...' : 'Save All Changes'}
+                {saving ? '⏳ Saving...' : '💾 Save All Changes'}
               </button>
             </div>
           </div>

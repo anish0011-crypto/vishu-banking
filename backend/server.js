@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -13,11 +14,16 @@ app.use(express.json());
 const adminRoutes = require('./routes/admin');
 const contentRoutes = require('./routes/content');
 const applicationRoutes = require('./routes/applications');
+const uploadRoutes = require('./routes/upload');
 
 // Use routes
 app.use('/api/admin', adminRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api/applications', applicationRoutes);
+app.use('/api/upload', uploadRoutes);
+
+// Serve uploaded images as static files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
