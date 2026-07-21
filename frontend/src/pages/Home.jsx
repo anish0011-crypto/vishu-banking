@@ -74,7 +74,7 @@ function Home() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-2xl text-blue-600 animate-pulse">Loading...</div>
+        <div className="text-2xl text-brand-600 animate-pulse">Loading...</div>
       </div>
     );
   }
@@ -84,11 +84,11 @@ function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section id="home" className="bg-gradient-to-br from-blue-50 to-indigo-100 py-12 sm:py-20">
+      <section id="home" className="bg-gradient-to-br from-brand-50 to-accent-100 py-12 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center animate-fadeInUp">
-            <p className="text-blue-600 font-semibold text-base sm:text-lg mb-2">{hero?.greeting}</p>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-4 leading-tight">
+            <p className="text-brand-600 font-semibold text-base sm:text-lg mb-2">{hero?.greeting}</p>
+            <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-4 leading-tight">
               {hero?.title}
             </h1>
             {hero?.subtitle && (
@@ -100,13 +100,13 @@ function Home() {
             <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
               <button 
                 onClick={() => scrollToSection('services')} 
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all transform hover:scale-105 text-sm sm:text-base"
+                className="bg-gradient-to-r from-brand-600 to-brand-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all transform hover:scale-105 text-sm sm:text-base"
               >
                 Our Services
               </button>
               <button 
                 onClick={() => scrollToSection('contact')} 
-                className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold transition-all text-sm sm:text-base"
+                className="border-2 border-brand-600 text-brand-600 hover:bg-brand-600 hover:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold transition-all text-sm sm:text-base"
               >
                 Contact Us
               </button>
@@ -125,32 +125,32 @@ function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-indigo-600 py-10 sm:py-16">
+      <section className="bg-gradient-to-r from-brand-600 to-brand-700 py-10 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-8">
             <div className="text-center text-white">
               <div className="text-3xl sm:text-5xl font-bold mb-1 sm:mb-2">{stats?.happyCustomers || 5000}+</div>
-              <div className="text-blue-100 text-xs sm:text-sm">Happy Customers</div>
+              <div className="text-brand-100 text-xs sm:text-sm">Happy Customers</div>
             </div>
             <div className="text-center text-white">
               <div className="text-3xl sm:text-5xl font-bold mb-1 sm:mb-2">{stats?.teamMembers || 10}+</div>
-              <div className="text-blue-100 text-xs sm:text-sm">Team Members</div>
+              <div className="text-brand-100 text-xs sm:text-sm">Team Members</div>
             </div>
             <div className="text-center text-white">
               <div className="text-3xl sm:text-5xl font-bold mb-1 sm:mb-2">{stats?.yearsExperience || 7}+</div>
-              <div className="text-blue-100 text-xs sm:text-sm">Years Experience</div>
+              <div className="text-brand-100 text-xs sm:text-sm">Years Experience</div>
             </div>
             <div className="text-center text-white">
               <div className="text-3xl sm:text-5xl font-bold mb-1 sm:mb-2">{stats?.bankingServices || 20}+</div>
-              <div className="text-blue-100 text-xs sm:text-sm">Banking Services</div>
+              <div className="text-brand-100 text-xs sm:text-sm">Banking Services</div>
             </div>
             <div className="text-center text-white">
               <div className="text-3xl sm:text-5xl font-bold mb-1 sm:mb-2">{stats?.retailPartners || 500}+</div>
-              <div className="text-blue-100 text-xs sm:text-sm">Retail Partners</div>
+              <div className="text-brand-100 text-xs sm:text-sm">Retail Partners</div>
             </div>
             <div className="text-center text-white col-span-2 sm:col-span-1">
               <div className="text-3xl sm:text-5xl font-bold mb-1 sm:mb-2">{stats?.customerSupport || '24×7'}</div>
-              <div className="text-blue-100 text-xs sm:text-sm">Customer Support</div>
+              <div className="text-brand-100 text-xs sm:text-sm">Customer Support</div>
             </div>
           </div>
         </div>
@@ -160,8 +160,8 @@ function Home() {
       <section id="about" className="py-12 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">{about?.title || 'About Us'}</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto"></div>
+            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">{about?.title || 'About Us'}</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto"></div>
           </div>
           <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
             <div>
@@ -174,27 +174,27 @@ function Home() {
               )}
             </div>
             <div className="space-y-4 sm:space-y-6">
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-900">{about?.name}</h3>
+              <h3 className="font-heading text-xl sm:text-2xl font-bold text-gray-900">{about?.name}</h3>
               <p className="text-gray-600 leading-relaxed">{about?.description}</p>
               {about?.mission && (
-                <div className="bg-blue-50 p-4 rounded-xl">
-                  <h4 className="font-semibold text-blue-900 mb-2">Mission</h4>
+                <div className="bg-brand-50 p-4 rounded-xl">
+                  <h4 className="font-heading font-semibold text-blue-900 mb-2">Mission</h4>
                   <p className="text-gray-700">{about.mission}</p>
                 </div>
               )}
               {about?.vision && (
-                <div className="bg-indigo-50 p-4 rounded-xl">
-                  <h4 className="font-semibold text-indigo-900 mb-2">Vision</h4>
+                <div className="bg-brand-50 p-4 rounded-xl">
+                  <h4 className="font-heading font-semibold text-indigo-900 mb-2">Vision</h4>
                   <p className="text-gray-700">{about.vision}</p>
                 </div>
               )}
               {about?.whyChooseUs?.length > 0 && (
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-3">Why Choose Us?</h4>
+                  <h4 className="font-heading font-semibold text-gray-900 mb-3">Why Choose Us?</h4>
                   <ul className="space-y-2">
                     {about.whyChooseUs.map((point, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-gray-700">
-                        <span className="text-blue-600 mt-1 flex-shrink-0">✓</span>
+                        <span className="text-brand-600 mt-1 flex-shrink-0">✓</span>
                         {point}
                       </li>
                     ))}
@@ -219,15 +219,15 @@ function Home() {
       <section id="services" className="py-12 sm:py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">What Do We Offer?</h2>
+            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">What Do We Offer?</h2>
             <p className="text-gray-600 text-sm sm:text-lg">Our company offers all type of banking services and work opportunities in marketing.</p>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mt-4"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto mt-4"></div>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {services?.map((service, index) => (
               <div 
                 key={index} 
-                className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2 animate-fadeInUp" 
+                className="bg-white/80 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-glass border border-white/50 hover:shadow-premium transition-all transform hover:-translate-y-2 animate-fadeInUp" 
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {service.imageUrl && (
@@ -237,11 +237,11 @@ function Home() {
                     className="w-full h-40 object-cover rounded-xl mb-4 sm:mb-6" 
                   />
                 )}
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">{service.name}</h3>
+                <h3 className="font-heading text-xl sm:text-2xl font-bold text-gray-900 mb-3">{service.name}</h3>
                 <p className="text-gray-600 mb-4 text-sm sm:text-base">{service.description}</p>
                 {service.benefits?.length > 0 && (
                   <div className="mb-4">
-                    <h4 className="font-semibold text-gray-800 mb-2 text-sm sm:text-base">Benefits:</h4>
+                    <h4 className="font-heading font-semibold text-gray-800 mb-2 text-sm sm:text-base">Benefits:</h4>
                     <ul className="text-sm text-gray-600 space-y-1">
                       {service.benefits.map((benefit, bidx) => (
                         <li key={bidx} className="flex items-start gap-2">
@@ -254,7 +254,7 @@ function Home() {
                 )}
                 <button 
                   onClick={() => scrollToSection('contact')} 
-                  className="text-blue-600 font-semibold hover:text-blue-800 transition-colors text-sm sm:text-base"
+                  className="text-brand-600 font-semibold hover:text-brand-800 transition-colors text-sm sm:text-base"
                 >
                   Know More →
                 </button>
@@ -268,8 +268,8 @@ function Home() {
       <section className="py-12 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Our Partners</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto"></div>
+            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Our Partners</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto"></div>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {partners?.map((partner, idx) => (
@@ -281,11 +281,11 @@ function Home() {
                     <div className="text-3xl sm:text-4xl font-bold text-gray-400">{partner.name.charAt(0)}</div>
                   )}
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{partner.name}</h3>
+                <h3 className="font-heading text-lg sm:text-xl font-bold text-gray-900 mb-2">{partner.name}</h3>
                 {partner.description && <p className="text-gray-600 text-sm mb-4">{partner.description}</p>}
                 <button 
                   onClick={() => scrollToSection('contact')} 
-                  className="text-blue-600 font-semibold hover:text-blue-800 text-sm sm:text-base"
+                  className="text-brand-600 font-semibold hover:text-brand-800 text-sm sm:text-base"
                 >
                   Know More →
                 </button>
@@ -299,45 +299,45 @@ function Home() {
       <section id="team" className="py-12 sm:py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Our Team</h2>
+            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Our Team</h2>
             <p className="text-gray-600 text-sm sm:text-lg">A family of {team?.length || 10}+ members</p>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mt-4"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto mt-4"></div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
             {team?.map((member, idx) => (
               <div key={idx} className="bg-white p-4 sm:p-6 rounded-2xl shadow-lg text-center hover:shadow-2xl transition-all">
-                <div className="w-20 h-20 sm:w-32 sm:h-32 mx-auto mb-3 sm:mb-4 rounded-full overflow-hidden border-4 border-blue-100">
+                <div className="w-20 h-20 sm:w-32 sm:h-32 mx-auto mb-3 sm:mb-4 rounded-full overflow-hidden border-4 border-brand-100">
                   {member.image ? (
                     <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center text-white text-2xl sm:text-3xl font-bold">
+                    <div className="w-full h-full bg-gradient-to-r from-brand-600 to-brand-700 flex items-center justify-center text-white text-2xl sm:text-3xl font-bold">
                       {member.name.charAt(0)}
                     </div>
                   )}
                 </div>
-                <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
-                <p className="text-blue-600 font-semibold mb-1 text-xs sm:text-base">{member.role}</p>
+                <h3 className="font-heading text-base sm:text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
+                <p className="text-brand-600 font-semibold mb-1 text-xs sm:text-base">{member.role}</p>
                 <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4">{member.experience}</p>
                 <div className="flex justify-center gap-2 sm:gap-3 flex-wrap">
                   {member.socialLinks?.linkedin && (
-                    <a href={member.socialLinks.linkedin} className="text-gray-500 hover:text-blue-600 text-xs sm:text-sm">
+                    <a href={member.socialLinks.linkedin} className="text-gray-500 hover:text-brand-600 text-xs sm:text-sm">
                       LinkedIn
                     </a>
                   )}
                   {member.socialLinks?.facebook && (
-                    <a href={member.socialLinks.facebook} className="text-gray-500 hover:text-blue-600 text-xs sm:text-sm">
+                    <a href={member.socialLinks.facebook} className="text-gray-500 hover:text-brand-600 text-xs sm:text-sm">
                       Facebook
                     </a>
                   )}
                   {member.socialLinks?.instagram && (
-                    <a href={member.socialLinks.instagram} className="text-gray-500 hover:text-blue-600 text-xs sm:text-sm">
+                    <a href={member.socialLinks.instagram} className="text-gray-500 hover:text-brand-600 text-xs sm:text-sm">
                       Instagram
                     </a>
                   )}
                 </div>
                 <button 
                   onClick={() => scrollToSection('contact')} 
-                  className="mt-3 sm:mt-4 text-blue-600 font-semibold hover:text-blue-800 text-xs sm:text-sm"
+                  className="mt-3 sm:mt-4 text-brand-600 font-semibold hover:text-brand-800 text-xs sm:text-sm"
                 >
                   Know More →
                 </button>
@@ -348,10 +348,10 @@ function Home() {
       </section>
 
       {/* Hiring Section */}
-      <section id="hiring" className="py-12 sm:py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
+      <section id="hiring" className="py-12 sm:py-20 bg-gradient-to-br from-brand-50 to-accent-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Join Our Team</h2>
+            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Join Our Team</h2>
             <p className="text-gray-600 text-sm sm:text-lg">Apply for BDE (Business Development Executive), Freelancer, Promoter, and more!</p>
           </div>
           <div className="bg-white p-5 sm:p-8 rounded-2xl shadow-xl">
@@ -368,7 +368,7 @@ function Home() {
                   required 
                   value={jobForm.fullName} 
                   onChange={(e) => setJobForm({...jobForm, fullName: e.target.value})} 
-                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base" 
+                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
                 />
                 <input 
                   type="email" 
@@ -376,7 +376,7 @@ function Home() {
                   required 
                   value={jobForm.email} 
                   onChange={(e) => setJobForm({...jobForm, email: e.target.value})} 
-                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base" 
+                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
                 />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -386,7 +386,7 @@ function Home() {
                   required 
                   value={jobForm.contactNumber} 
                   onChange={(e) => setJobForm({...jobForm, contactNumber: e.target.value})} 
-                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base" 
+                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
                 />
                 <input 
                   type="text" 
@@ -394,7 +394,7 @@ function Home() {
                   required 
                   value={jobForm.pinCode} 
                   onChange={(e) => setJobForm({...jobForm, pinCode: e.target.value})} 
-                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base" 
+                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
                 />
               </div>
               <textarea 
@@ -402,19 +402,19 @@ function Home() {
                 required 
                 value={jobForm.fullAddress} 
                 onChange={(e) => setJobForm({...jobForm, fullAddress: e.target.value})} 
-                className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base" 
+                className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
                 rows={2} 
               />
               <textarea 
                 placeholder="Tell us about yourself..." 
                 value={jobForm.details} 
                 onChange={(e) => setJobForm({...jobForm, details: e.target.value})} 
-                className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base" 
+                className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
                 rows={4} 
               />
               <button 
                 type="submit" 
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 sm:py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all text-sm sm:text-base"
+                className="w-full bg-gradient-to-r from-brand-600 to-brand-700 text-white px-8 py-3 sm:py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all text-sm sm:text-base"
               >
                 Apply Now
               </button>
@@ -427,7 +427,7 @@ function Home() {
       <section id="testimonials" className="py-12 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Customer's Feedback</h2>
+            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Customer's Feedback</h2>
             <p className="text-gray-600 text-sm sm:text-lg">Some valuable feedback from our valuable customers</p>
             <div className="flex items-center justify-center gap-2 mt-4">
               <div className="text-yellow-500 text-xl sm:text-2xl">★★★★★</div>
@@ -445,11 +445,11 @@ function Home() {
                   {testimonial.image ? (
                     <img src={testimonial.image} alt={testimonial.name} className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover flex-shrink-0" />
                   ) : (
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg sm:text-xl flex-shrink-0">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-brand-600 to-brand-700 flex items-center justify-center text-white font-bold text-lg sm:text-xl flex-shrink-0">
                       {testimonial.name.charAt(0)}
                     </div>
                   )}
-                  <h4 className="text-base sm:text-lg font-bold text-gray-900">{testimonial.name}</h4>
+                  <h4 className="font-heading text-base sm:text-lg font-bold text-gray-900">{testimonial.name}</h4>
                 </div>
               </div>
             ))}
@@ -461,8 +461,8 @@ function Home() {
       <section id="gallery" className="py-12 sm:py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Gallery</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto"></div>
+            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Gallery</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto"></div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {gallery?.map((item, idx) => (
@@ -473,8 +473,8 @@ function Home() {
                   <div className="w-full h-40 sm:h-48 bg-gray-200 flex items-center justify-center text-gray-500">No Image</div>
                 )}
                 <div className="p-4 sm:p-6">
-                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
-                  <span className="inline-block px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs sm:text-sm font-semibold">
+                  <h3 className="font-heading text-base sm:text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
+                  <span className="inline-block px-3 py-1 bg-brand-100 text-brand-600 rounded-full text-xs sm:text-sm font-semibold">
                     {item.category}
                   </span>
                   {item.description && <p className="text-gray-600 text-xs sm:text-sm mt-2">{item.description}</p>}
@@ -489,16 +489,16 @@ function Home() {
       <section id="faq" className="py-12 sm:py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto"></div>
+            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto"></div>
           </div>
           <div className="space-y-4">
             {faqs?.map((faq, idx) => (
               <div key={idx} className="bg-gray-50 rounded-xl p-4 sm:p-6">
-                <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">{faq.question}</h3>
+                <h3 className="font-heading text-base sm:text-lg font-bold text-gray-900 mb-2">{faq.question}</h3>
                 <p className="text-gray-700 text-sm sm:text-base">{faq.answer}</p>
                 {faq.category && (
-                  <span className="inline-block mt-3 px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-semibold">
+                  <span className="inline-block mt-3 px-3 py-1 bg-brand-100 text-brand-600 rounded-full text-xs font-semibold">
                     {faq.category}
                   </span>
                 )}
@@ -512,8 +512,8 @@ function Home() {
       <section id="blog" className="py-12 sm:py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Latest Articles</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto"></div>
+            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Latest Articles</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto"></div>
           </div>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             {blogs?.slice(0, 3).map((blog, idx) => (
@@ -523,16 +523,16 @@ function Home() {
                 )}
                 <div className="p-4 sm:p-6">
                   {blog.category && (
-                    <span className="inline-block px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-semibold mb-3">
+                    <span className="inline-block px-3 py-1 bg-brand-100 text-brand-600 rounded-full text-xs font-semibold mb-3">
                       {blog.category}
                     </span>
                   )}
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{blog.title}</h3>
+                  <h3 className="font-heading text-lg sm:text-xl font-bold text-gray-900 mb-2">{blog.title}</h3>
                   {blog.excerpt && <p className="text-gray-600 mb-4 text-sm sm:text-base">{blog.excerpt}</p>}
                   {blog.author && (
                     <p className="text-gray-500 text-xs sm:text-sm mb-4">By {blog.author}</p>
                   )}
-                  <button className="text-blue-600 font-semibold hover:text-blue-800 text-sm sm:text-base">
+                  <button className="text-brand-600 font-semibold hover:text-brand-800 text-sm sm:text-base">
                     Read More →
                   </button>
                 </div>
@@ -546,35 +546,55 @@ function Home() {
       <section id="contact" className="py-12 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
+            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
             <p className="text-gray-600 text-sm sm:text-lg">For more information, please contact us</p>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mt-4"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto mt-4"></div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12">
             <div>
-              <div className="space-y-4 sm:space-y-6">
+              <div className="space-y-4 sm:space-y-6 mb-8">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-brand-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-brand-600 text-lg sm:text-xl">📍</span>
+                  </div>
+                  <div>
+                    <h4 className="font-heading font-semibold text-gray-900 text-sm sm:text-base">Our Address</h4>
+                    <p className="text-gray-600 text-sm sm:text-base">123 Financial District, Business Park, New Delhi, India 110001</p>
+                  </div>
+                </div>
                 {about?.contact && (
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-blue-600 text-lg sm:text-xl">📞</span>
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-brand-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-brand-600 text-lg sm:text-xl">📞</span>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 text-sm sm:text-base">Contact No.</h4>
+                      <h4 className="font-heading font-semibold text-gray-900 text-sm sm:text-base">Contact No.</h4>
                       <p className="text-gray-600 text-sm sm:text-base">{about.contact}</p>
                     </div>
                   </div>
                 )}
                 {about?.email && (
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-blue-600 text-lg sm:text-xl">✉️</span>
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-brand-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-brand-600 text-lg sm:text-xl">✉️</span>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 text-sm sm:text-base">Email</h4>
+                      <h4 className="font-heading font-semibold text-gray-900 text-sm sm:text-base">Email</h4>
                       <p className="text-gray-600 text-sm sm:text-base break-all">{about.email}</p>
                     </div>
                   </div>
                 )}
+              </div>
+              <div className="w-full h-64 sm:h-80 rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224345.83923192776!2d77.06889754720782!3d28.52758200617607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sNew%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen="" 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
               </div>
             </div>
             <div className="bg-gray-50 p-5 sm:p-8 rounded-2xl shadow-xl">
@@ -590,7 +610,7 @@ function Home() {
                   required 
                   value={contactForm.name} 
                   onChange={(e) => setContactForm({...contactForm, name: e.target.value})} 
-                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base" 
+                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
                 />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input 
@@ -598,14 +618,14 @@ function Home() {
                     placeholder="Email (optional)" 
                     value={contactForm.email} 
                     onChange={(e) => setContactForm({...contactForm, email: e.target.value})} 
-                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base" 
+                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
                   />
                   <input 
                     type="text" 
                     placeholder="Contact number" 
                     value={contactForm.contactNumber} 
                     onChange={(e) => setContactForm({...contactForm, contactNumber: e.target.value})} 
-                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base" 
+                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
                   />
                 </div>
                 <textarea 
@@ -613,12 +633,12 @@ function Home() {
                   required 
                   value={contactForm.query} 
                   onChange={(e) => setContactForm({...contactForm, query: e.target.value})} 
-                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base" 
+                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
                   rows={4} 
                 />
                 <button 
                   type="submit" 
-                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 sm:py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all text-sm sm:text-base"
+                  className="w-full bg-gradient-to-r from-brand-600 to-brand-700 text-white px-8 py-3 sm:py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all text-sm sm:text-base"
                 >
                   Send Message
                 </button>
