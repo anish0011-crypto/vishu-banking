@@ -1,653 +1,161 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import FloatingButtons from '../components/FloatingButtons';
 
 function Home() {
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-  const [content, setContent] = useState(null);
-  const [loading, setLoading] = useState(true);
+  
+  const servicesList = [
+    { title: "Aadhaar Services", icon: "📄" },
+    { title: "PAN Card", icon: "🪪" },
+    { title: "Banking Services", icon: "🏦" },
+    { title: "Money Transfer", icon: "💸" },
+    { title: "AEPS", icon: "🏧" },
+    { title: "Mini Statement", icon: "🧾" },
+    { title: "Cash Withdrawal", icon: "💵" },
+    { title: "Bill Payments", icon: "⚡" },
+    { title: "Insurance Services", icon: "🛡️" },
+    { title: "GST & Gov Services", icon: "🏛️" },
+    { title: "Online Form Filling", icon: "📝" },
+    { title: "Other Digital Services", icon: "🌐" },
+  ];
 
-  const [jobForm, setJobForm] = useState({
-    fullName: '',
-    email: '',
-    contactNumber: '',
-    fullAddress: '',
-    pinCode: '',
-    details: ''
-  });
-  const [contactForm, setContactForm] = useState({
-    name: '',
-    email: '',
-    contactNumber: '',
-    query: ''
-  });
-  const [jobMessage, setJobMessage] = useState('');
-  const [contactMessage, setContactMessage] = useState('');
-
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  useEffect(() => {
-    const fetchContent = async () => {
-      try {
-        const res = await axios.get(`${API_URL}/api/content`);
-        setContent(res.data);
-      } catch (err) {
-        console.error('Error fetching content:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchContent();
-  }, []);
-
-  const handleJobSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(`${API_URL}/api/applications/jobs`, jobForm);
-      setJobMessage('Application submitted successfully!');
-      setJobForm({ fullName: '', email: '', contactNumber: '', fullAddress: '', pinCode: '', details: '' });
-      setTimeout(() => setJobMessage(''), 3000);
-    } catch (err) {
-      setJobMessage('Error submitting application.');
-      console.error(err);
-    }
-  };
-
-  const handleContactSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(`${API_URL}/api/applications/contact`, contactForm);
-      setContactMessage('Message sent successfully!');
-      setContactForm({ name: '', email: '', contactNumber: '', query: '' });
-      setTimeout(() => setContactMessage(''), 3000);
-    } catch (err) {
-      setContactMessage('Error sending message.');
-      console.error(err);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-2xl text-brand-600 animate-pulse">Loading...</div>
-      </div>
-    );
-  }
-
-  const { hero, about, stats, services, partners, team, testimonials, gallery, faqs, blogs, downloads } = content || {};
+  const highlights = [
+    { title: "Trusted Service", stat: "100%", desc: "Verified operations" },
+    { title: "Fast Processing", stat: "< 24h", desc: "Quick turnaround" },
+    { title: "Secure Tx", stat: "AES", desc: "Bank-grade security" },
+    { title: "Customer Sat.", stat: "4.9/5", desc: "Based on 10k+ reviews" },
+  ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      
+      {/* Background Glows */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] -z-10 mix-blend-screen pointer-events-none"></div>
+      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[100px] -z-10 mix-blend-screen pointer-events-none"></div>
+
       {/* Hero Section */}
-      <section id="home" className="bg-gradient-to-br from-brand-50 to-accent-100 py-12 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center animate-fadeInUp">
-            <p className="text-brand-600 font-semibold text-base sm:text-lg mb-2">{hero?.greeting}</p>
-            <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-4 leading-tight">
-              {hero?.title}
-            </h1>
-            {hero?.subtitle && (
-              <p className="text-base sm:text-xl text-gray-600 mb-2 px-2">{hero.subtitle}</p>
-            )}
-            {hero?.tagline && (
-              <p className="text-sm sm:text-lg text-gray-500 mb-8 px-2">{hero.tagline}</p>
-            )}
-            <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
-              <button 
-                onClick={() => scrollToSection('services')} 
-                className="bg-gradient-to-r from-brand-600 to-brand-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all transform hover:scale-105 text-sm sm:text-base"
-              >
-                Our Services
-              </button>
-              <button 
-                onClick={() => scrollToSection('contact')} 
-                className="border-2 border-brand-600 text-brand-600 hover:bg-brand-600 hover:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold transition-all text-sm sm:text-base"
-              >
-                Contact Us
-              </button>
-            </div>
-            {hero?.image && (
-              <div className="mt-8 sm:mt-12">
-                <img 
-                  src={hero.image} 
-                  alt="Hero" 
-                  className="mx-auto w-full max-w-xs sm:max-w-md rounded-2xl shadow-2xl" 
-                />
+      <section id="home" className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center text-center animate-fade-in">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-gray-300 mb-8 backdrop-blur-sm">
+          <span className="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+          Your Premier Digital Banking Partner in Ghazipur
+        </div>
+        <h1 className="text-5xl sm:text-6xl lg:text-8xl font-extrabold tracking-tight mb-8">
+          Next-Gen <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Banking</span> <br className="hidden sm:block"/> Solutions.
+        </h1>
+        <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mb-12 font-medium leading-relaxed">
+          Experience seamless money transfers, Aadhaar services, form filling, and essential government services right at your fingertips.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+          <a href="#services" className="bg-white text-background hover:bg-gray-200 px-8 py-4 rounded-full font-bold text-lg transition-colors flex items-center justify-center gap-2">
+            Explore Services
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          </a>
+          <a href="#contact" className="bg-surface border border-white/10 hover:border-white/20 hover:bg-white/5 px-8 py-4 rounded-full font-bold text-lg transition-all flex items-center justify-center">
+            Contact Us
+          </a>
+        </div>
+      </section>
+
+      {/* About Section (Massive Overhaul) */}
+      <section id="about" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="mb-16">
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">About Vishwajeet Banking Point</h2>
+          <div className="w-20 h-1.5 bg-primary rounded-full"></div>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-24">
+          <div className="bento-card p-8 sm:p-12 h-full flex flex-col justify-center bg-gradient-to-br from-surface to-[#1a1a1a]">
+            <h3 className="text-2xl font-bold mb-6 text-white">Your Trusted Service Center</h3>
+            <p className="text-gray-400 text-lg leading-relaxed mb-6">
+              Vishwajeet Banking Point is a premier digital banking and government service center dedicated to bridging the digital divide. We provide secure, fast, and highly reliable financial solutions to our local community in Dildarnagar, Ghazipur.
+            </p>
+            <p className="text-gray-400 text-lg leading-relaxed">
+              From AEPS and money transfers to essential documentation like PAN and Aadhaar services, we operate with maximum transparency and dedication. Our highly experienced support ensures that every customer leaves satisfied and empowered.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4 h-full">
+            {highlights.map((item, idx) => (
+              <div key={idx} className="bento-card p-6 flex flex-col justify-center text-center">
+                <div className="text-3xl font-mono font-bold text-primary mb-2">{item.stat}</div>
+                <div className="text-white font-bold mb-1">{item.title}</div>
+                <div className="text-gray-500 text-sm">{item.desc}</div>
               </div>
-            )}
+            ))}
+          </div>
+        </div>
+
+        <div className="mb-12">
+          <h3 className="text-2xl sm:text-3xl font-bold mb-8 text-center">Comprehensive Digital Services</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {servicesList.map((service, idx) => (
+              <div key={idx} className="bento-card p-4 sm:p-6 flex flex-col items-center justify-center text-center hover:-translate-y-1">
+                <span className="text-3xl sm:text-4xl mb-3">{service.icon}</span>
+                <span className="text-sm font-semibold text-gray-200 leading-tight">{service.title}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="bg-gradient-to-r from-brand-600 to-brand-700 py-10 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-8">
-            <div className="text-center text-white">
-              <div className="text-3xl sm:text-5xl font-bold mb-1 sm:mb-2">{stats?.happyCustomers || 5000}+</div>
-              <div className="text-brand-100 text-xs sm:text-sm">Happy Customers</div>
-            </div>
-            <div className="text-center text-white">
-              <div className="text-3xl sm:text-5xl font-bold mb-1 sm:mb-2">{stats?.teamMembers || 10}+</div>
-              <div className="text-brand-100 text-xs sm:text-sm">Team Members</div>
-            </div>
-            <div className="text-center text-white">
-              <div className="text-3xl sm:text-5xl font-bold mb-1 sm:mb-2">{stats?.yearsExperience || 7}+</div>
-              <div className="text-brand-100 text-xs sm:text-sm">Years Experience</div>
-            </div>
-            <div className="text-center text-white">
-              <div className="text-3xl sm:text-5xl font-bold mb-1 sm:mb-2">{stats?.bankingServices || 20}+</div>
-              <div className="text-brand-100 text-xs sm:text-sm">Banking Services</div>
-            </div>
-            <div className="text-center text-white">
-              <div className="text-3xl sm:text-5xl font-bold mb-1 sm:mb-2">{stats?.retailPartners || 500}+</div>
-              <div className="text-brand-100 text-xs sm:text-sm">Retail Partners</div>
-            </div>
-            <div className="text-center text-white col-span-2 sm:col-span-1">
-              <div className="text-3xl sm:text-5xl font-bold mb-1 sm:mb-2">{stats?.customerSupport || '24×7'}</div>
-              <div className="text-brand-100 text-xs sm:text-sm">Customer Support</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="py-12 sm:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">{about?.title || 'About Us'}</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto"></div>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
-            <div>
-              {about?.profileImage && (
-                <img 
-                  src={about.profileImage} 
-                  alt="About" 
-                  className="rounded-2xl shadow-xl w-full max-w-md mx-auto" 
-                />
-              )}
-            </div>
-            <div className="space-y-4 sm:space-y-6">
-              <h3 className="font-heading text-xl sm:text-2xl font-bold text-gray-900">{about?.name}</h3>
-              <p className="text-gray-600 leading-relaxed">{about?.description}</p>
-              {about?.mission && (
-                <div className="bg-brand-50 p-4 rounded-xl">
-                  <h4 className="font-heading font-semibold text-blue-900 mb-2">Mission</h4>
-                  <p className="text-gray-700">{about.mission}</p>
+      {/* Modern Contact Section */}
+      <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="bento-card p-0 overflow-hidden flex flex-col lg:flex-row relative">
+          
+          <div className="lg:w-1/2 p-8 sm:p-12 lg:p-16 flex flex-col justify-center bg-surface relative z-10">
+            <h2 className="text-3xl sm:text-5xl font-extrabold mb-4">Visit Us</h2>
+            <p className="text-gray-400 mb-10 text-lg">
+              We are strategically located in the heart of the city to serve you better. Drop by for any inquiries or services.
+            </p>
+            
+            <div className="space-y-8">
+              <div className="flex gap-4 items-start">
+                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 text-primary">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                 </div>
-              )}
-              {about?.vision && (
-                <div className="bg-brand-50 p-4 rounded-xl">
-                  <h4 className="font-heading font-semibold text-indigo-900 mb-2">Vision</h4>
-                  <p className="text-gray-700">{about.vision}</p>
-                </div>
-              )}
-              {about?.whyChooseUs?.length > 0 && (
                 <div>
-                  <h4 className="font-heading font-semibold text-gray-900 mb-3">Why Choose Us?</h4>
-                  <ul className="space-y-2">
-                    {about.whyChooseUs.map((point, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-gray-700">
-                        <span className="text-brand-600 mt-1 flex-shrink-0">✓</span>
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
+                  <h4 className="text-white font-bold mb-1">Business Address</h4>
+                  <p className="text-gray-400">Main Market, Nearby Sabji Mandi, Dildarnagar, Ghazipur, Uttar Pradesh – 232326</p>
                 </div>
-              )}
-              {about?.gstNumber && (
-                <p className="text-gray-600"><strong>GST Number:</strong> {about.gstNumber}</p>
-              )}
-              {about?.contact && (
-                <p className="text-gray-600"><strong>Contact:</strong> {about.contact}</p>
-              )}
-              {about?.email && (
-                <p className="text-gray-600"><strong>Email:</strong> {about.email}</p>
-              )}
+              </div>
+              
+              <div className="flex gap-4 items-start">
+                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 text-primary">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                </div>
+                <div>
+                  <h4 className="text-white font-bold mb-1">Phone</h4>
+                  <p className="text-gray-400 font-mono">+91 98765 43210</p>
+                </div>
+              </div>
+              
+              <div className="flex gap-4 items-start">
+                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 text-primary">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                </div>
+                <div>
+                  <h4 className="text-white font-bold mb-1">Email</h4>
+                  <p className="text-gray-400 font-mono">contact@vishwajeetbanking.com</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section id="services" className="py-12 sm:py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">What Do We Offer?</h2>
-            <p className="text-gray-600 text-sm sm:text-lg">Our company offers all type of banking services and work opportunities in marketing.</p>
-            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto mt-4"></div>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {services?.map((service, index) => (
-              <div 
-                key={index} 
-                className="bg-white/80 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-glass border border-white/50 hover:shadow-premium transition-all transform hover:-translate-y-2 animate-fadeInUp" 
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                {service.imageUrl && (
-                  <img 
-                    src={service.imageUrl} 
-                    alt={service.name} 
-                    className="w-full h-40 object-cover rounded-xl mb-4 sm:mb-6" 
-                  />
-                )}
-                <h3 className="font-heading text-xl sm:text-2xl font-bold text-gray-900 mb-3">{service.name}</h3>
-                <p className="text-gray-600 mb-4 text-sm sm:text-base">{service.description}</p>
-                {service.benefits?.length > 0 && (
-                  <div className="mb-4">
-                    <h4 className="font-heading font-semibold text-gray-800 mb-2 text-sm sm:text-base">Benefits:</h4>
-                    <ul className="text-sm text-gray-600 space-y-1">
-                      {service.benefits.map((benefit, bidx) => (
-                        <li key={bidx} className="flex items-start gap-2">
-                          <span className="text-green-500 flex-shrink-0">•</span>
-                          {benefit}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                <button 
-                  onClick={() => scrollToSection('contact')} 
-                  className="text-brand-600 font-semibold hover:text-brand-800 transition-colors text-sm sm:text-base"
-                >
-                  Know More →
-                </button>
-              </div>
-            ))}
+          
+          <div className="lg:w-1/2 h-[400px] lg:h-auto min-h-[400px]">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3600.4184646797177!2d83.74315257444736!3d25.52352227749842!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398e21a2b918f6d7%3A0x643190ab7a6beeb2!2sDildar%20Nagar%2C%20Uttar%20Pradesh%20232326!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+              width="100%" 
+              height="100%" 
+              style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg)' }} 
+              allowFullScreen="" 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+              className="w-full h-full object-cover"
+            ></iframe>
           </div>
         </div>
       </section>
-
-      {/* Partners Section */}
-      <section className="py-12 sm:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Our Partners</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto"></div>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {partners?.map((partner, idx) => (
-              <div key={idx} className="border rounded-2xl p-5 sm:p-6 text-center hover:shadow-lg transition-all">
-                <div className="h-24 sm:h-32 flex items-center justify-center mb-4">
-                  {partner.logo ? (
-                    <img src={partner.logo} alt={partner.name} className="max-h-full max-w-full object-contain" />
-                  ) : (
-                    <div className="text-3xl sm:text-4xl font-bold text-gray-400">{partner.name.charAt(0)}</div>
-                  )}
-                </div>
-                <h3 className="font-heading text-lg sm:text-xl font-bold text-gray-900 mb-2">{partner.name}</h3>
-                {partner.description && <p className="text-gray-600 text-sm mb-4">{partner.description}</p>}
-                <button 
-                  onClick={() => scrollToSection('contact')} 
-                  className="text-brand-600 font-semibold hover:text-brand-800 text-sm sm:text-base"
-                >
-                  Know More →
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section id="team" className="py-12 sm:py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Our Team</h2>
-            <p className="text-gray-600 text-sm sm:text-lg">A family of {team?.length || 10}+ members</p>
-            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto mt-4"></div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
-            {team?.map((member, idx) => (
-              <div key={idx} className="bg-white p-4 sm:p-6 rounded-2xl shadow-lg text-center hover:shadow-2xl transition-all">
-                <div className="w-20 h-20 sm:w-32 sm:h-32 mx-auto mb-3 sm:mb-4 rounded-full overflow-hidden border-4 border-brand-100">
-                  {member.image ? (
-                    <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-r from-brand-600 to-brand-700 flex items-center justify-center text-white text-2xl sm:text-3xl font-bold">
-                      {member.name.charAt(0)}
-                    </div>
-                  )}
-                </div>
-                <h3 className="font-heading text-base sm:text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
-                <p className="text-brand-600 font-semibold mb-1 text-xs sm:text-base">{member.role}</p>
-                <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4">{member.experience}</p>
-                <div className="flex justify-center gap-2 sm:gap-3 flex-wrap">
-                  {member.socialLinks?.linkedin && (
-                    <a href={member.socialLinks.linkedin} className="text-gray-500 hover:text-brand-600 text-xs sm:text-sm">
-                      LinkedIn
-                    </a>
-                  )}
-                  {member.socialLinks?.facebook && (
-                    <a href={member.socialLinks.facebook} className="text-gray-500 hover:text-brand-600 text-xs sm:text-sm">
-                      Facebook
-                    </a>
-                  )}
-                  {member.socialLinks?.instagram && (
-                    <a href={member.socialLinks.instagram} className="text-gray-500 hover:text-brand-600 text-xs sm:text-sm">
-                      Instagram
-                    </a>
-                  )}
-                </div>
-                <button 
-                  onClick={() => scrollToSection('contact')} 
-                  className="mt-3 sm:mt-4 text-brand-600 font-semibold hover:text-brand-800 text-xs sm:text-sm"
-                >
-                  Know More →
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Hiring Section */}
-      <section id="hiring" className="py-12 sm:py-20 bg-gradient-to-br from-brand-50 to-accent-100">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Join Our Team</h2>
-            <p className="text-gray-600 text-sm sm:text-lg">Apply for BDE (Business Development Executive), Freelancer, Promoter, and more!</p>
-          </div>
-          <div className="bg-white p-5 sm:p-8 rounded-2xl shadow-xl">
-            {jobMessage && (
-              <div className={`mb-4 p-4 rounded-lg ${jobMessage.includes('success') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                {jobMessage}
-              </div>
-            )}
-            <form onSubmit={handleJobSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input 
-                  type="text" 
-                  placeholder="Full Name" 
-                  required 
-                  value={jobForm.fullName} 
-                  onChange={(e) => setJobForm({...jobForm, fullName: e.target.value})} 
-                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
-                />
-                <input 
-                  type="email" 
-                  placeholder="Email Address" 
-                  required 
-                  value={jobForm.email} 
-                  onChange={(e) => setJobForm({...jobForm, email: e.target.value})} 
-                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
-                />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input 
-                  type="text" 
-                  placeholder="Contact Number" 
-                  required 
-                  value={jobForm.contactNumber} 
-                  onChange={(e) => setJobForm({...jobForm, contactNumber: e.target.value})} 
-                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
-                />
-                <input 
-                  type="text" 
-                  placeholder="Pin Code" 
-                  required 
-                  value={jobForm.pinCode} 
-                  onChange={(e) => setJobForm({...jobForm, pinCode: e.target.value})} 
-                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
-                />
-              </div>
-              <textarea 
-                placeholder="Full Address" 
-                required 
-                value={jobForm.fullAddress} 
-                onChange={(e) => setJobForm({...jobForm, fullAddress: e.target.value})} 
-                className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
-                rows={2} 
-              />
-              <textarea 
-                placeholder="Tell us about yourself..." 
-                value={jobForm.details} 
-                onChange={(e) => setJobForm({...jobForm, details: e.target.value})} 
-                className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
-                rows={4} 
-              />
-              <button 
-                type="submit" 
-                className="w-full bg-gradient-to-r from-brand-600 to-brand-700 text-white px-8 py-3 sm:py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all text-sm sm:text-base"
-              >
-                Apply Now
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section id="testimonials" className="py-12 sm:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Customer's Feedback</h2>
-            <p className="text-gray-600 text-sm sm:text-lg">Some valuable feedback from our valuable customers</p>
-            <div className="flex items-center justify-center gap-2 mt-4">
-              <div className="text-yellow-500 text-xl sm:text-2xl">★★★★★</div>
-              <div className="text-gray-600 font-semibold text-sm sm:text-base">4.9/5 Rating</div>
-            </div>
-          </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
-            {testimonials?.map((testimonial, idx) => (
-              <div key={idx} className="bg-gray-50 p-6 sm:p-8 rounded-2xl shadow-lg">
-                <div className="text-yellow-500 text-lg sm:text-xl mb-4">
-                  {'★'.repeat(testimonial.rating || 5)}{'☆'.repeat(5 - (testimonial.rating || 5))}
-                </div>
-                <p className="text-gray-700 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">{testimonial.text}</p>
-                <div className="flex items-center gap-3 sm:gap-4">
-                  {testimonial.image ? (
-                    <img src={testimonial.image} alt={testimonial.name} className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover flex-shrink-0" />
-                  ) : (
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-brand-600 to-brand-700 flex items-center justify-center text-white font-bold text-lg sm:text-xl flex-shrink-0">
-                      {testimonial.name.charAt(0)}
-                    </div>
-                  )}
-                  <h4 className="font-heading text-base sm:text-lg font-bold text-gray-900">{testimonial.name}</h4>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Gallery Section */}
-      <section id="gallery" className="py-12 sm:py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Gallery</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto"></div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {gallery?.map((item, idx) => (
-              <div key={idx} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
-                {item.imageUrl ? (
-                  <img src={item.imageUrl} alt={item.title} className="w-full h-40 sm:h-48 object-cover" />
-                ) : (
-                  <div className="w-full h-40 sm:h-48 bg-gray-200 flex items-center justify-center text-gray-500">No Image</div>
-                )}
-                <div className="p-4 sm:p-6">
-                  <h3 className="font-heading text-base sm:text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
-                  <span className="inline-block px-3 py-1 bg-brand-100 text-brand-600 rounded-full text-xs sm:text-sm font-semibold">
-                    {item.category}
-                  </span>
-                  {item.description && <p className="text-gray-600 text-xs sm:text-sm mt-2">{item.description}</p>}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section id="faq" className="py-12 sm:py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto"></div>
-          </div>
-          <div className="space-y-4">
-            {faqs?.map((faq, idx) => (
-              <div key={idx} className="bg-gray-50 rounded-xl p-4 sm:p-6">
-                <h3 className="font-heading text-base sm:text-lg font-bold text-gray-900 mb-2">{faq.question}</h3>
-                <p className="text-gray-700 text-sm sm:text-base">{faq.answer}</p>
-                {faq.category && (
-                  <span className="inline-block mt-3 px-3 py-1 bg-brand-100 text-brand-600 rounded-full text-xs font-semibold">
-                    {faq.category}
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Blog Section */}
-      <section id="blog" className="py-12 sm:py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Latest Articles</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto"></div>
-          </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
-            {blogs?.slice(0, 3).map((blog, idx) => (
-              <div key={idx} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all">
-                {blog.imageUrl && (
-                  <img src={blog.imageUrl} alt={blog.title} className="w-full h-40 sm:h-48 object-cover" />
-                )}
-                <div className="p-4 sm:p-6">
-                  {blog.category && (
-                    <span className="inline-block px-3 py-1 bg-brand-100 text-brand-600 rounded-full text-xs font-semibold mb-3">
-                      {blog.category}
-                    </span>
-                  )}
-                  <h3 className="font-heading text-lg sm:text-xl font-bold text-gray-900 mb-2">{blog.title}</h3>
-                  {blog.excerpt && <p className="text-gray-600 mb-4 text-sm sm:text-base">{blog.excerpt}</p>}
-                  {blog.author && (
-                    <p className="text-gray-500 text-xs sm:text-sm mb-4">By {blog.author}</p>
-                  )}
-                  <button className="text-brand-600 font-semibold hover:text-brand-800 text-sm sm:text-base">
-                    Read More →
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-12 sm:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
-            <p className="text-gray-600 text-sm sm:text-lg">For more information, please contact us</p>
-            <div className="w-24 h-1 bg-gradient-to-r from-brand-600 to-brand-700 mx-auto mt-4"></div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12">
-            <div>
-              <div className="space-y-4 sm:space-y-6 mb-8">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-brand-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-brand-600 text-lg sm:text-xl">📍</span>
-                  </div>
-                  <div>
-                    <h4 className="font-heading font-semibold text-gray-900 text-sm sm:text-base">Our Address</h4>
-                    <p className="text-gray-600 text-sm sm:text-base">123 Financial District, Business Park, New Delhi, India 110001</p>
-                  </div>
-                </div>
-                {about?.contact && (
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-brand-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-brand-600 text-lg sm:text-xl">📞</span>
-                    </div>
-                    <div>
-                      <h4 className="font-heading font-semibold text-gray-900 text-sm sm:text-base">Contact No.</h4>
-                      <p className="text-gray-600 text-sm sm:text-base">{about.contact}</p>
-                    </div>
-                  </div>
-                )}
-                {about?.email && (
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-brand-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-brand-600 text-lg sm:text-xl">✉️</span>
-                    </div>
-                    <div>
-                      <h4 className="font-heading font-semibold text-gray-900 text-sm sm:text-base">Email</h4>
-                      <p className="text-gray-600 text-sm sm:text-base break-all">{about.email}</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div className="w-full h-64 sm:h-80 rounded-2xl overflow-hidden shadow-lg border border-gray-100">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224345.83923192776!2d77.06889754720782!3d28.52758200617607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sNew%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0 }} 
-                  allowFullScreen="" 
-                  loading="lazy" 
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-              </div>
-            </div>
-            <div className="bg-gray-50 p-5 sm:p-8 rounded-2xl shadow-xl">
-              {contactMessage && (
-                <div className={`mb-4 p-4 rounded-lg ${contactMessage.includes('success') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                  {contactMessage}
-                </div>
-              )}
-              <form onSubmit={handleContactSubmit} className="space-y-4">
-                <input 
-                  type="text" 
-                  placeholder="Name" 
-                  required 
-                  value={contactForm.name} 
-                  onChange={(e) => setContactForm({...contactForm, name: e.target.value})} 
-                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
-                />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input 
-                    type="email" 
-                    placeholder="Email (optional)" 
-                    value={contactForm.email} 
-                    onChange={(e) => setContactForm({...contactForm, email: e.target.value})} 
-                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
-                  />
-                  <input 
-                    type="text" 
-                    placeholder="Contact number" 
-                    value={contactForm.contactNumber} 
-                    onChange={(e) => setContactForm({...contactForm, contactNumber: e.target.value})} 
-                    className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
-                  />
-                </div>
-                <textarea 
-                  placeholder="Your query..." 
-                  required 
-                  value={contactForm.query} 
-                  onChange={(e) => setContactForm({...contactForm, query: e.target.value})} 
-                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm sm:text-base" 
-                  rows={4} 
-                />
-                <button 
-                  type="submit" 
-                  className="w-full bg-gradient-to-r from-brand-600 to-brand-700 text-white px-8 py-3 sm:py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all text-sm sm:text-base"
-                >
-                  Send Message
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-      <FloatingButtons />
+      
     </div>
   );
 }

@@ -7,39 +7,36 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        heading: ['Outfit', 'sans-serif'],
+        sans: ['Plus Jakarta Sans', 'sans-serif'],
+        mono: ['Space Grotesk', 'monospace'],
       },
       colors: {
-        brand: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1', // Navy-ish blue
-          800: '#075985',
-          900: '#0c4a6e', // Deep Navy
-          950: '#082f49',
-        },
-        accent: {
-          50: '#fdf8f6',
-          100: '#f2e8e5',
-          200: '#eaddd7',
-          300: '#e0cec7',
-          400: '#d2bab0',
-          500: '#c5a89c',
-          600: '#b79789',
-          700: '#a38171',
-          800: '#8c6b5d',
-          900: '#d97706', // Gold / Amber
-        }
+        background: '#0a0a0a',
+        foreground: '#ffffff',
+        surface: '#171717',
+        'surface-light': '#262626',
+        primary: '#4f46e5', // Indigo 600
+        'primary-hover': '#4338ca', 
+        secondary: '#06b6d4', // Cyan 500
       },
       boxShadow: {
-        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
-        'premium': '0 20px 40px -15px rgba(0,0,0,0.05)',
+        'bento': '0 4px 24px -4px rgba(0, 0, 0, 0.5)',
+        'glow': '0 0 30px rgba(79, 70, 229, 0.2)',
+        'glow-strong': '0 0 40px rgba(79, 70, 229, 0.4)',
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.8s ease-out forwards',
+        'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(40px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        }
       }
     },
   },

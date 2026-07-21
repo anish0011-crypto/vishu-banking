@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -14,111 +21,97 @@ const Navbar = () => {
   };
 
   return (
-    <div className="sticky top-0 z-50 font-sans">
-      {/* Topbar */}
-      <div className="bg-brand-950 text-brand-100 text-xs sm:text-sm py-2 px-4 sm:px-6 lg:px-8 hidden md:block">
+    <>
+      <div className="bg-primary text-white py-2 px-4 text-xs font-medium tracking-wide hidden md:block">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center space-x-6">
-            <span className="flex items-center">
-              <svg className="w-4 h-4 mr-1.5 text-accent-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"></path></svg>
-              123 Financial District, Business Park, New Delhi, India 110001
-            </span>
-            <span className="flex items-center">
-              <svg className="w-4 h-4 mr-1.5 text-accent-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
-              contact@vishwajeetbanking.com
+          <div className="flex gap-6">
+            <span className="flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+              Main Market, Nearby Sabji Mandi, Dildarnagar, Ghazipur, UP – 232326
             </span>
           </div>
-          <div className="flex items-center">
-            <span className="flex items-center font-semibold text-accent-900">
-              <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+          <div className="flex gap-6">
+            <span className="flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+              contact@vishwajeetbanking.com
+            </span>
+            <span className="flex items-center gap-2 font-mono">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
               +91 98765 43210
             </span>
           </div>
         </div>
       </div>
-
-      {/* Main Navbar */}
-      <nav className="bg-white/90 backdrop-blur-md shadow-glass border-b border-gray-100">
+      
+      <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'glass-nav py-3' : 'bg-transparent py-5'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex-shrink-0">
-              <h1 
-                className="text-xl sm:text-2xl font-heading font-extrabold bg-gradient-to-r from-brand-800 to-brand-500 bg-clip-text text-transparent cursor-pointer hover:scale-105 transition-transform leading-tight" 
-                onClick={() => scrollToSection('home')}
-              >
-                Vishwajeet Banking
-              </h1>
-            </div>
+          <div className="flex justify-between items-center">
+            <h1 
+              className="text-2xl font-extrabold tracking-tight cursor-pointer flex items-center gap-2" 
+              onClick={() => scrollToSection('home')}
+            >
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                <span className="text-white font-mono leading-none">V</span>
+              </div>
+              Vishwajeet<span className="text-primary">.</span>
+            </h1>
             
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-2 lg:space-x-8">
-              {['Home', 'About', 'Services', 'Team', 'Contact'].map((item) => (
+            <div className="hidden md:flex items-center gap-1 bg-surface-light/50 backdrop-blur-md px-2 py-1.5 rounded-full border border-white/10">
+              {['Home', 'About', 'Services', 'Contact'].map((item) => (
                 <button 
                   key={item}
                   onClick={() => scrollToSection(item.toLowerCase())} 
-                  className="text-gray-700 hover:text-brand-600 font-semibold transition-all duration-300 hover:-translate-y-0.5 px-3 py-2 rounded-lg hover:bg-brand-50"
+                  className="text-sm font-medium text-gray-300 hover:text-white px-5 py-2 rounded-full hover:bg-white/10 transition-colors"
                 >
                   {item}
                 </button>
               ))}
             </div>
 
-            {/* Desktop Login Button */}
-            <div className="hidden md:flex items-center">
+            <div className="hidden md:flex">
               <button 
                 onClick={() => navigate('/admin/login')}
-                className="bg-brand-600 text-white px-6 py-2.5 rounded-lg font-bold shadow-md hover:bg-brand-700 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
+                className="bg-white text-background px-6 py-2.5 rounded-full text-sm font-bold hover:bg-gray-200 transition-colors"
               >
-                Admin Login
+                Admin Panel
               </button>
             </div>
 
-            {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center">
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="text-brand-900 focus:outline-none bg-brand-50 p-2 rounded-lg"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  {isOpen ? (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  ) : (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-                  )}
-                </svg>
-              </button>
-            </div>
+            <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white p-2">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isOpen ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /> : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />}
+              </svg>
+            </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden bg-white border-t border-gray-100 shadow-xl absolute w-full">
-            <div className="px-4 pt-4 pb-6 space-y-2">
-              <div className="mb-4 pb-4 border-b border-gray-100 text-sm text-gray-600">
-                <p className="flex items-start mb-2"><svg className="w-4 h-4 mr-2 mt-0.5 text-accent-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"></path></svg> 123 Financial District, Business Park, New Delhi, India 110001</p>
-                <p className="flex items-center"><svg className="w-4 h-4 mr-2 text-accent-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg> +91 98765 43210</p>
+          <div className="md:hidden absolute top-full left-0 w-full bg-surface border-b border-white/10 shadow-2xl">
+            <div className="px-4 py-6 flex flex-col gap-2">
+              <div className="mb-4 pb-4 border-b border-white/10 text-xs text-gray-400">
+                <p className="mb-2">📍 Main Market, Nearby Sabji Mandi, Dildarnagar, Ghazipur, UP – 232326</p>
+                <p>📞 +91 98765 43210</p>
               </div>
-              {['Home', 'About', 'Services', 'Team', 'Contact'].map((item) => (
+              {['Home', 'About', 'Services', 'Contact'].map((item) => (
                 <button
                   key={item}
                   onClick={() => scrollToSection(item.toLowerCase())}
-                  className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-brand-50 hover:text-brand-600 font-semibold rounded-lg transition-all"
+                  className="text-left px-4 py-3 text-white font-medium rounded-xl hover:bg-white/5"
                 >
                   {item}
                 </button>
               ))}
               <button 
                 onClick={() => { navigate('/admin/login'); setIsOpen(false); }}
-                className="w-full mt-4 bg-brand-600 text-white px-6 py-3 rounded-lg font-bold shadow-md"
+                className="mt-4 bg-primary text-white px-4 py-3 rounded-xl font-bold"
               >
-                Admin Login
+                Admin Panel
               </button>
             </div>
           </div>
         )}
       </nav>
-    </div>
+    </>
   );
 };
 

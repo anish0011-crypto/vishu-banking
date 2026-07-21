@@ -1,65 +1,65 @@
-
-import React from 'react';
-
 const Footer = () => {
   return (
-    <footer className="bg-brand-950 text-white pt-16 pb-8 font-sans">
+    <footer className="bg-[#050505] border-t border-white/10 pt-24 pb-12 mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-10 sm:mb-12">
-          <div className="col-span-2 md:col-span-1 pr-4">
-            <h3 className="text-xl sm:text-2xl font-heading font-extrabold mb-3 sm:mb-4 bg-gradient-to-r from-brand-300 to-brand-100 bg-clip-text text-transparent">
-              Vishwajeet Banking
-            </h3>
-            <p className="text-gray-400 mb-6 text-sm sm:text-base leading-relaxed">
-              Your trusted banking partner since 2023. We provide a wide range of banking and financial services.
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 mb-16">
+          <div className="md:col-span-5">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+                <span className="text-white font-mono text-xl leading-none">V</span>
+              </div>
+              <h3 className="text-2xl font-extrabold tracking-tight">
+                Vishwajeet Banking Point
+              </h3>
+            </div>
+            <p className="text-gray-400 leading-relaxed mb-8 max-w-sm">
+              Your premier destination for trusted digital banking, financial solutions, and government services in Ghazipur. Fast, secure, and always reliable.
             </p>
-            <div className="space-y-3">
-              <p className="flex items-start text-gray-300 text-sm">
-                <svg className="w-5 h-5 mr-3 mt-0.5 text-accent-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"></path></svg>
-                123 Financial District, Business Park, New Delhi, India 110001
-              </p>
-              <p className="flex items-center text-gray-300 text-sm">
-                <svg className="w-5 h-5 mr-3 text-accent-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
-                contact@vishwajeetbanking.com
-              </p>
-              <p className="flex items-center text-gray-300 text-sm">
-                <svg className="w-5 h-5 mr-3 text-accent-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
-                +91 98765 43210
-              </p>
+            <div className="space-y-4">
+              <div className="flex items-start gap-3 text-gray-300">
+                <svg className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                <span className="text-sm">Main Market, Nearby Sabji Mandi, Dildarnagar, Ghazipur, Uttar Pradesh – 232326</span>
+              </div>
+              <div className="flex items-center gap-3 text-gray-300">
+                <svg className="w-6 h-6 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                <span className="text-sm font-mono">contact@vishwajeetbanking.com</span>
+              </div>
+              <div className="flex items-center gap-3 text-gray-300">
+                <svg className="w-6 h-6 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                <span className="text-sm font-mono">+91 98765 43210</span>
+              </div>
             </div>
           </div>
-          <div>
-            <h4 className="text-sm sm:text-lg font-bold mb-3 sm:mb-4">Quick Links</h4>
-            <ul className="space-y-1 sm:space-y-2">
-              <li><a href="#home" className="text-gray-400 hover:text-brand-300 transition-colors text-xs sm:text-sm">Home</a></li>
-              <li><a href="#about" className="text-gray-400 hover:text-brand-300 transition-colors text-xs sm:text-sm">About</a></li>
-              <li><a href="#services" className="text-gray-400 hover:text-brand-300 transition-colors text-xs sm:text-sm">Services</a></li>
-              <li><a href="#team" className="text-gray-400 hover:text-brand-300 transition-colors text-xs sm:text-sm">Team</a></li>
-              <li><a href="#contact" className="text-gray-400 hover:text-brand-300 transition-colors text-xs sm:text-sm">Contact</a></li>
+          
+          <div className="md:col-span-2 md:col-start-8">
+            <h4 className="text-lg font-bold mb-6 text-white">Company</h4>
+            <ul className="space-y-4">
+              <li><a href="#home" className="text-gray-400 hover:text-primary transition-colors text-sm">Home</a></li>
+              <li><a href="#about" className="text-gray-400 hover:text-primary transition-colors text-sm">About Us</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-primary transition-colors text-sm">Our Services</a></li>
+              <li><a href="#contact" className="text-gray-400 hover:text-primary transition-colors text-sm">Contact</a></li>
             </ul>
           </div>
-          <div>
-            <h4 className="text-sm sm:text-lg font-bold mb-3 sm:mb-4">Services</h4>
-            <ul className="space-y-1 sm:space-y-2">
-              <li><a href="#services" className="text-gray-400 hover:text-brand-300 transition-colors text-xs sm:text-sm">AEPS</a></li>
-              <li><a href="#services" className="text-gray-400 hover:text-brand-300 transition-colors text-xs sm:text-sm">Money Transfer</a></li>
-              <li><a href="#services" className="text-gray-400 hover:text-brand-300 transition-colors text-xs sm:text-sm">Account Opening</a></li>
-              <li><a href="#services" className="text-gray-400 hover:text-brand-300 transition-colors text-xs sm:text-sm">Insurance</a></li>
-              <li><a href="#services" className="text-gray-400 hover:text-brand-300 transition-colors text-xs sm:text-sm">Fastag</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-sm sm:text-lg font-bold mb-3 sm:mb-4">Legal</h4>
-            <ul className="space-y-1 sm:space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-brand-300 transition-colors text-xs sm:text-sm">Privacy Policy</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-brand-300 transition-colors text-xs sm:text-sm">Terms & Conditions</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-brand-300 transition-colors text-xs sm:text-sm">Refund Policy</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-brand-300 transition-colors text-xs sm:text-sm">Disclaimer</a></li>
+          
+          <div className="md:col-span-3">
+            <h4 className="text-lg font-bold mb-6 text-white">Top Services</h4>
+            <ul className="space-y-4">
+              <li><a href="#services" className="text-gray-400 hover:text-primary transition-colors text-sm">Aadhaar & PAN Services</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-primary transition-colors text-sm">AEPS & Money Transfer</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-primary transition-colors text-sm">Bill Payments & Insurance</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-primary transition-colors text-sm">Online Form Filling</a></li>
             </ul>
           </div>
         </div>
-        <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
-          <p>© {new Date().getFullYear()} Vishwajeet Banking Point Private Limited. All rights reserved.</p>
+        
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-gray-500 text-sm">
+            © {new Date().getFullYear()} Vishwajeet Banking Point. All rights reserved.
+          </p>
+          <div className="flex gap-6">
+            <a href="#" className="text-gray-500 hover:text-white text-sm transition-colors">Privacy Policy</a>
+            <a href="#" className="text-gray-500 hover:text-white text-sm transition-colors">Terms of Service</a>
+          </div>
         </div>
       </div>
     </footer>
