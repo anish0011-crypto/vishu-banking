@@ -18,7 +18,7 @@ export default function AdminTeam() {
     const fd = new FormData(); fd.append('file', file);
     try {
       const res = await api.post('/upload', fd);
-      setForm(f => ({...f, profilePhoto: 'http://localhost:5000' + res.data.url}));
+      setForm(f => ({...f, profilePhoto: res.data.url}));
       toast.success('Photo uploaded');
     } catch { toast.error('Upload failed'); }
   };

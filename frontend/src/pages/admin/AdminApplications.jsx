@@ -44,7 +44,7 @@ export default function AdminApplications() {
                 <td className="p-3">{a.mobile}</td>
                 <td className="p-3 text-gray-500">{a.email}</td>
                 <td className="p-3"><span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColor[a.status]}`}>{a.status}</span></td>
-                <td className="p-3">{a.resumeUrl ? <a href={'http://localhost:5000'+a.resumeUrl} target="_blank" className="text-blue-600 underline text-xs">Download</a> : '—'}</td>
+                <td className="p-3">{a.resumeUrl ? <a href={a.resumeUrl} target="_blank" className="text-blue-600 underline text-xs">Download</a> : '—'}</td>
                 <td className="p-3 flex gap-1 flex-wrap">
                   <button onClick={()=>updateStatus(a._id,'Shortlisted')} className="text-green-600 text-xs border border-green-200 px-2 py-1 rounded">✓</button>
                   <button onClick={()=>updateStatus(a._id,'Rejected')} className="text-red-600 text-xs border border-red-200 px-2 py-1 rounded">✗</button>

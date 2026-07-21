@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import toast from 'react-hot-toast';
 
 function AdminLogin() {
@@ -13,7 +13,7 @@ function AdminLogin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/admin/login', { username, password });
+      const res = await api.post('/admin/login', { username, password });
       login(res.data.token, { username: res.data.username });
       toast.success('Login Successful');
       navigate('/admin');

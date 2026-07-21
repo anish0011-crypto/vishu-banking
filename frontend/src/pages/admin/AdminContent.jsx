@@ -22,7 +22,7 @@ export default function AdminContent() {
     const fd = new FormData(); fd.append('file', file);
     try {
       const res = await api.post('/upload', fd);
-      setHero(h => ({...h, [field]: 'http://localhost:5000' + res.data.url}));
+      setHero(h => ({...h, [field]: res.data.url}));
       toast.success('Image uploaded');
     } catch { toast.error('Upload failed'); }
   };

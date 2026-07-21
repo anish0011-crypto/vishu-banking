@@ -23,7 +23,7 @@ function AdminServices() {
     fd.append('file', file);
     try {
       const res = await api.post('/upload', fd);
-      setFormData({ ...formData, [field]: 'http://localhost:5000' + res.data.url });
+      setFormData({ ...formData, [field]: res.data.url });
       toast.success('Image Uploaded');
     } catch(err) { toast.error('Upload failed'); }
   };
