@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
@@ -8,6 +9,7 @@ import About from './pages/About';
 import Services from './pages/Services';
 import ServiceDetail from './pages/ServiceDetail';
 import Team from './pages/Team';
+import TeamMember from './pages/TeamMember';
 import Career from './pages/Career';
 import Contact from './pages/Contact';
 import Testimonials from './pages/Testimonials';
@@ -20,6 +22,12 @@ import AdminLayout from './components/AdminLayout';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminServices from './pages/admin/AdminServices';
+import AdminTeam from './pages/admin/AdminTeam';
+import AdminTestimonials from './pages/admin/AdminTestimonials';
+import AdminApplications from './pages/admin/AdminApplications';
+import AdminMessages from './pages/admin/AdminMessages';
+import AdminContent from './pages/admin/AdminContent';
+import AdminSettings from './pages/admin/AdminSettings';
 
 function Layout({ children, toggleTheme, isDark }) {
   const location = useLocation();
@@ -61,7 +69,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
+        <Toaster position="top-right" toastOptions={{ duration: 4000, style: { borderRadius: '8px', background: '#333', color: '#fff' } }} />
         <Layout toggleTheme={toggleTheme} isDark={isDark}>
           <Routes>
             {/* Public Routes */}
@@ -70,6 +78,7 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/services/:id" element={<ServiceDetail />} />
             <Route path="/team" element={<Team />} />
+            <Route path="/team/:id" element={<TeamMember />} />
             <Route path="/career" element={<Career />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/testimonials" element={<Testimonials />} />
@@ -78,9 +87,13 @@ function App() {
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<AdminDashboard />} />
+              <Route path="content" element={<AdminContent />} />
               <Route path="services" element={<AdminServices />} />
-              {/* Other admin routes can be added here */}
-              <Route path="*" element={<div className="p-8 text-gray-500">Page under construction</div>} />
+              <Route path="team" element={<AdminTeam />} />
+              <Route path="testimonials" element={<AdminTestimonials />} />
+              <Route path="applications" element={<AdminApplications />} />
+              <Route path="messages" element={<AdminMessages />} />
+              <Route path="settings" element={<AdminSettings />} />
             </Route>
           </Routes>
         </Layout>
