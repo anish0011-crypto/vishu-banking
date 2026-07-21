@@ -2,16 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply bg-background text-foreground font-sans antialiased overflow-x-hidden;
+@layer utilities {
+  .clip-diagonal {
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
   }
 }
 
-.bento-card {
-  @apply bg-surface rounded-[24px] border border-white/5 shadow-bento overflow-hidden transition-all duration-300 hover:border-white/10 hover:shadow-glow;
+body {
+  overflow-x: hidden;
 }
 
-.glass-nav {
-  @apply bg-[#0a0a0a]/70 backdrop-blur-xl border-b border-white/10;
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.service-card {
+  @apply bg-white rounded-2xl shadow-soft border border-gray-100 p-8 transition-all duration-300 hover:shadow-float hover:-translate-y-2 relative overflow-hidden;
+}
+
+.service-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: theme('colors.primary');
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover::before {
+  transform: scaleX(1);
 }
