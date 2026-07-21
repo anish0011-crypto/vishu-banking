@@ -54,7 +54,6 @@ const AdminLogin = () => {
             Login
           </button>
         </form>
-        <p className="mt-4 text-gray-600 text-center">Default: admin / admin123</p>
       </div>
     </div>
   );

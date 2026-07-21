@@ -303,7 +303,7 @@ function Home() {
             <p className="text-gray-600 text-sm sm:text-lg">A family of {team?.length || 10}+ members</p>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mt-4"></div>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
             {team?.map((member, idx) => (
               <div key={idx} className="bg-white p-4 sm:p-6 rounded-2xl shadow-lg text-center hover:shadow-2xl transition-all">
                 <div className="w-20 h-20 sm:w-32 sm:h-32 mx-auto mb-3 sm:mb-4 rounded-full overflow-hidden border-4 border-blue-100">
