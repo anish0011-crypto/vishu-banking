@@ -2,15 +2,17 @@ const mongoose = require('mongoose');
 
 const teamMemberSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  experience: { type: String, required: true },
-  role: { type: String, required: true },
-  image: { type: String },
-  socialLinks: {
-    linkedin: String,
-    facebook: String,
-    instagram: String,
-    twitter: String
-  }
-});
+  designation: { type: String, required: true },
+  experience: { type: String },
+  description: { type: String },
+  facebook: { type: String },
+  instagram: { type: String },
+  linkedin: { type: String },
+  email: { type: String },
+  mobile: { type: String },
+  profilePhoto: { type: String },
+  coverImage: { type: String },
+  orderIndex: { type: Number, default: 0 }
+}, { timestamps: true });
 
 module.exports = mongoose.model('TeamMember', teamMemberSchema);

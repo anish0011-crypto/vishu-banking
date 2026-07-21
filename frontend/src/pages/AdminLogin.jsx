@@ -1,62 +1,58 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
-const AdminLogin = () => {
+function AdminLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${API_URL}/api/admin/login`, { username, password });
-      localStorage.setItem('token', res.data.token);
+      const res = await axios.post('http://localhost:5000/api/admin/login', { username, password });
+      login(res.data.token, { username: res.data.username });
+      toast.success('Login Successful');
       navigate('/admin');
     } catch (err) {
-      setError('Invalid credentials');
+      toast.error(err.response?.data?.message || 'Login failed');
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-100 px-4">
-      <div className="bg-white p-5 sm:p-8 rounded-xl shadow-lg max-w-md w-full">
-        <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8">Admin Login</h1>
-        {error && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">{error}</div>}
-        <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="min-h-screen flex items-center justify-center bg-slate-900 text-white">
+      <div className="bg-slate-800 p-8 rounded-xl shadow-2xl w-full max-w-md">
+        <h2 className="text-3xl font-bold mb-6 text-center text-blue-400">Admin Login</h2>
+        <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label className="block text-gray-700 mb-2">Username</label>
+            <label className="block text-sm font-medium mb-2">Username</label>
             <input 
               type="text" 
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
+              value={username} 
+              onChange={e => setUsername(e.target.value)} 
+              className="w-full bg-slate-700 border border-slate-600 rounded px-4 py-3 outline-none focus:border-blue-500" 
             />
           </div>
           <div>
-            <label className="block text-gray-700 mb-2">Password</label>
+            <label className="block text-sm font-medium mb-2">Password</label>
             <input 
               type="password" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
+              value={password} 
+              onChange={e => setPassword(e.target.value)} 
+              className="w-full bg-slate-700 border border-slate-600 rounded px-4 py-3 outline-none focus:border-blue-500" 
             />
           </div>
-          <button 
-            type="submit" 
-            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all"
-          >
-            Login
+          <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded font-bold transition-colors shadow-lg">
+            Login to Dashboard
           </button>
         </form>
       </div>
     </div>
   );
-};
-
+}
 export default AdminLogin;

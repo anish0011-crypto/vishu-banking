@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 
 const serviceSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  title: { type: String, required: true },
   description: { type: String, required: true },
-  imageUrl: { type: String },
-  benefits: [{ type: String }],
-  documentsRequired: [{ type: String }],
-  isFeatured: { type: Boolean, default: false },
-  category: { type: String, enum: ['aeps', 'micro-atm', 'money-transfer', 'pan-card', 'aadhaar', 'insurance', 'fastag', 'recharge', 'bill-payment', 'loan', 'credit-card', 'business', 'computer', 'account'], default: 'aeps' }
-});
+  logoImage: { type: String },
+  bannerImage: { type: String },
+  knowMoreContent: { type: String },
+  seoMetaTitle: { type: String },
+  seoDescription: { type: String },
+  orderIndex: { type: Number, default: 0 }
+}, { timestamps: true });
 
 module.exports = mongoose.model('Service', serviceSchema);

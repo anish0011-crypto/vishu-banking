@@ -72,9 +72,9 @@ const Navbar = ({ toggleTheme, isDark }) => {
               <button onClick={toggleTheme} className="p-2 rounded-full bg-gray-100 dark:bg-dark-bg text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition">
                 {isDark ? '☀️' : '🌙'}
               </button>
-              <a href="tel:9506562637" className="bg-primary text-white px-5 py-2.5 rounded-md font-semibold text-sm flex items-center shadow-lg shadow-primary/30 hover:bg-primary-dark transition-colors">
-                📞 9506562637
-              </a>
+              <button onClick={() => navigate('/admin/login')} className="bg-primary text-white px-5 py-2.5 rounded-md font-semibold text-sm flex items-center shadow-lg shadow-primary/30 hover:bg-primary-dark transition-colors">
+                Admin Login
+              </button>
             </div>
 
             {/* Mobile Toggle */}
@@ -104,9 +104,9 @@ const Navbar = ({ toggleTheme, isDark }) => {
                   {link.name}
                 </button>
               ))}
-              <a href="tel:9506562637" className="block w-full text-center mt-4 bg-primary text-white px-6 py-3 rounded-md font-bold shadow-md">
-                Call Now
-              </a>
+              <button onClick={() => { navigate('/admin/login'); setIsOpen(false); }} className="block w-full text-center mt-4 bg-primary text-white px-6 py-3 rounded-md font-bold shadow-md">
+                Admin Login
+              </button>
             </div>
           </div>
         )}

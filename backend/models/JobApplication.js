@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 
 const jobApplicationSchema = new mongoose.Schema({
-  fullName: { type: String, required: true },
+  name: { type: String, required: true },
   email: { type: String, required: true },
-  contactNumber: { type: String, required: true },
-  fullAddress: { type: String, required: true },
-  pinCode: { type: String, required: true },
-  details: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now }
-});
+  mobile: { type: String, required: true },
+  address: { type: String },
+  pincode: { type: String },
+  resumeUrl: { type: String, required: true },
+  aboutYourself: { type: String },
+  status: { type: String, enum: ['Pending', 'Shortlisted', 'Rejected'], default: 'Pending' }
+}, { timestamps: true });
 
 module.exports = mongoose.model('JobApplication', jobApplicationSchema);

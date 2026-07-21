@@ -13,13 +13,11 @@ app.use(express.json());
 // Routes
 const adminRoutes = require('./routes/admin');
 const contentRoutes = require('./routes/content');
-const applicationRoutes = require('./routes/applications');
 const uploadRoutes = require('./routes/upload');
 
 // Use routes
 app.use('/api/admin', adminRoutes);
 app.use('/api/content', contentRoutes);
-app.use('/api/applications', applicationRoutes);
 app.use('/api/upload', uploadRoutes);
 
 // Serve uploaded images as static files
