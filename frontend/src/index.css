@@ -2,42 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .clip-diagonal {
-    clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
-  }
-}
-
 body {
   overflow-x: hidden;
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
 }
 
-@keyframes fadeInUp {
+.animate-slide-up {
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.service-card {
-  @apply bg-white rounded-2xl shadow-soft border border-gray-100 p-8 transition-all duration-300 hover:shadow-float hover:-translate-y-2 relative overflow-hidden;
-}
-
-.service-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: theme('colors.primary');
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-
-.service-card:hover::before {
-  transform: scaleX(1);
+.card-hover {
+  @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-float dark:hover:shadow-float-dark;
 }
