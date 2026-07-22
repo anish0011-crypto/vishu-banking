@@ -48,7 +48,7 @@ export default function AdminSettings() {
         <div className="grid md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1">Primary Color</label>
-            <div className="flex items-center gap-2"><input type="color" value={settings.primaryColor||'#0ea5e9'} onChange={e=>setSettings({...settings,primaryColor:e.target.value})} className="h-10 w-16 rounded cursor-pointer"/><span className="text-sm text-gray-500">{settings.primaryColor}</span></div>
+            <div className="flex items-center gap-2"><input type="color" value={settings.primaryColor||'#0ea5e9'} onChange={e=>setSettings({...settings,primaryColor:e.target.value})} className="h-10 w-16 rounded cursor-pointer"/><span className="text-sm text-black">{settings.primaryColor}</span></div>
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Font Family</label>

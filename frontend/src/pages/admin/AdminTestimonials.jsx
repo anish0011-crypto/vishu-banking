@@ -43,10 +43,10 @@ export default function AdminTestimonials() {
       <div className="bg-white p-6 rounded-xl shadow-sm border">
         <h2 className="text-xl font-bold mb-4">{editing ? 'Edit Review' : 'Add Review'}</h2>
         <form onSubmit={handleSubmit} className="space-y-3">
-          <div><label className="text-xs text-gray-500 block mb-1">Customer Name</label><input required type="text" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} className="w-full border rounded p-2 text-sm"/></div>
-          <div><label className="text-xs text-gray-500 block mb-1">Review</label><textarea required rows="4" value={form.review} onChange={e=>setForm({...form,review:e.target.value})} className="w-full border rounded p-2 text-sm"></textarea></div>
-          <div><label className="text-xs text-gray-500 block mb-1">Rating (1-5)</label><input type="number" min="1" max="5" value={form.rating} onChange={e=>setForm({...form,rating:e.target.value})} className="w-full border rounded p-2 text-sm"/></div>
-          <div><label className="text-xs text-gray-500 block mb-1">Customer Photo</label><input type="file" accept="image/*" onChange={handleFile} className="w-full text-sm"/>{form.customerPhoto && <img src={form.customerPhoto} className="h-10 mt-2 rounded-full"/>}</div>
+          <div><label className="text-xs text-black block mb-1 font-semibold">Customer Name</label><input required type="text" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} className="w-full border rounded p-2 text-sm text-black"/></div>
+          <div><label className="text-xs text-black block mb-1 font-semibold">Review</label><textarea required rows="4" value={form.review} onChange={e=>setForm({...form,review:e.target.value})} className="w-full border rounded p-2 text-sm text-black"></textarea></div>
+          <div><label className="text-xs text-black block mb-1 font-semibold">Rating (1-5)</label><input type="number" min="1" max="5" value={form.rating} onChange={e=>setForm({...form,rating:e.target.value})} className="w-full border rounded p-2 text-sm text-black"/></div>
+          <div><label className="text-xs text-black block mb-1 font-semibold">Customer Photo</label><input type="file" accept="image/*" onChange={handleFile} className="w-full text-sm text-black"/>{form.customerPhoto && <img src={form.customerPhoto} className="h-10 mt-2 rounded-full"/>}</div>
           <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded font-bold">{editing ? 'Update' : 'Add Review'}</button>
           {editing && <button type="button" onClick={()=>{setEditing(null);setForm({name:'',review:'',rating:5});}} className="w-full bg-gray-200 text-gray-700 py-2 rounded">Cancel</button>}
         </form>
@@ -55,11 +55,11 @@ export default function AdminTestimonials() {
         <div className="divide-y">
           {items.map(t => (
             <div key={t._id} className="p-4 flex items-start gap-4">
-              {t.customerPhoto ? <img src={t.customerPhoto} className="w-12 h-12 rounded-full object-cover flex-shrink-0"/> : <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600 flex-shrink-0">{t.name?.[0]}</div>}
+              {t.customerPhoto || t.image ? <img src={t.customerPhoto || t.image} className="w-12 h-12 rounded-full object-cover flex-shrink-0"/> : <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600 flex-shrink-0">{t.name?.[0]}</div>}
               <div className="flex-1">
                 <div className="font-bold text-gray-900">{t.name}</div>
                 <div className="text-yellow-400 text-sm">{'★'.repeat(t.rating)}{'☆'.repeat(5-t.rating)}</div>
-                <p className="text-gray-600 text-sm mt-1 line-clamp-2">{t.review}</p>
+                <p className="text-black text-sm mt-1 line-clamp-2">{t.review || t.text}</p>
               </div>
               <div className="flex gap-2">
                 <button onClick={()=>{setEditing(t._id);setForm(t);}} className="text-blue-600 text-xs border border-blue-200 px-2 py-1 rounded">Edit</button>

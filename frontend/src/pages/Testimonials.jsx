@@ -28,9 +28,9 @@ function Testimonials() {
         {data.map((r,i) => (
           <motion.div key={r._id} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*0.1}} className="bg-white dark:bg-dark-surface p-8 rounded-xl shadow-soft border border-gray-100 dark:border-dark-border text-left card-hover">
             <div className="flex text-yellow-400 mb-4 text-xl">{'★'.repeat(r.rating||5)}{'☆'.repeat(5-(r.rating||5))}</div>
-            <p className="text-gray-600 dark:text-gray-300 italic mb-6">"{r.review}"</p>
+            <p className="text-gray-600 dark:text-gray-300 italic mb-6">"{r.review || r.text}"</p>
             <div className="flex items-center gap-3">
-              {r.customerPhoto ? <img src={r.customerPhoto} alt={r.name} className="w-10 h-10 rounded-full object-cover"/> : <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600">{r.name?.[0]}</div>}
+              {r.customerPhoto || r.image ? <img src={r.customerPhoto || r.image} alt={r.name} className="w-10 h-10 rounded-full object-cover"/> : <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600">{r.name?.[0]}</div>}
               <span className="font-bold text-gray-900 dark:text-white">{r.name}</span>
             </div>
           </motion.div>

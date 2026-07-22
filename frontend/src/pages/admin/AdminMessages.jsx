@@ -34,10 +34,10 @@ export default function AdminMessages() {
               <span className="font-bold text-gray-900">{m.name}</span>
               <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColor[m.status]}`}>{m.status}</span>
             </div>
-            <p className="text-xs text-gray-400 mb-2">{m.email} · {m.mobile}</p>
+            <p className="text-xs text-black mb-2">{m.email} · {m.mobile}</p>
             {m.subject && <p className="text-sm font-medium text-gray-700 mb-1">Re: {m.subject}</p>}
-            <p className="text-gray-600 text-sm">{m.message}</p>
-            <p className="text-xs text-gray-400 mt-2">{new Date(m.createdAt).toLocaleString()}</p>
+            <p className="text-black text-sm">{m.message}</p>
+            <p className="text-xs text-gray-600 mt-2">{new Date(m.createdAt).toLocaleString()}</p>
           </div>
           <div className="flex sm:flex-col gap-2 items-start">
             <button onClick={()=>updateStatus(m._id,'Read')} className="text-gray-600 text-xs border px-3 py-1.5 rounded hover:bg-gray-50">Mark Read</button>

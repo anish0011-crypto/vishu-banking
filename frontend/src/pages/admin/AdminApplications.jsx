@@ -44,11 +44,11 @@ export default function AdminApplications() {
             <div className="flex items-start justify-between mb-2">
               <div>
                 <p className="font-semibold text-gray-900">{a.name}</p>
-                <p className="text-xs text-gray-500">{a.mobile} · {a.email}</p>
+                <p className="text-xs text-black">{a.mobile} · {a.email}</p>
               </div>
               <span className={`px-2 py-1 rounded-full text-xs font-medium flex-shrink-0 ${statusColor[a.status] || 'bg-gray-100 text-gray-700'}`}>{a.status || 'Pending'}</span>
             </div>
-            {a.address && <p className="text-xs text-gray-500 mb-3">📍 {a.address}</p>}
+            {a.address && <p className="text-xs text-black mb-3">📍 {a.address}</p>}
             <div className="flex items-center gap-2 flex-wrap">
               {a.resumeUrl && <a href={a.resumeUrl} target="_blank" className="text-blue-600 underline text-xs border border-blue-200 px-2 py-1 rounded">📄 Resume</a>}
               <button onClick={()=>updateStatus(a._id,'Shortlisted')} className="text-green-600 text-xs border border-green-200 px-2 py-1 rounded">✓ Shortlist</button>
@@ -70,7 +70,7 @@ export default function AdminApplications() {
                 <tr key={a._id} className="border-b hover:bg-gray-50">
                   <td className="p-3 font-medium">{a.name}</td>
                   <td className="p-3">{a.mobile}</td>
-                  <td className="p-3 text-gray-500">{a.email}</td>
+                  <td className="p-3 text-black">{a.email}</td>
                   <td className="p-3"><span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColor[a.status] || 'bg-gray-100 text-gray-700'}`}>{a.status || 'Pending'}</span></td>
                   <td className="p-3">{a.resumeUrl ? <a href={a.resumeUrl} target="_blank" className="text-blue-600 underline text-xs">Download</a> : '—'}</td>
                   <td className="p-3 flex gap-1 flex-wrap">

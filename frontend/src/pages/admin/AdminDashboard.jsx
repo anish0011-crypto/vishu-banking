@@ -38,7 +38,7 @@ function AdminDashboard() {
     <div className="space-y-6">
       <div>
         <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Dashboard Overview</h1>
-        <p className="text-sm text-gray-500 mt-1">Welcome back! Here's what's happening on your website.</p>
+        <p className="text-sm text-black mt-1">Welcome back! Here's what's happening on your website.</p>
       </div>
 
       {/* Stats Grid */}
@@ -49,7 +49,7 @@ function AdminDashboard() {
               {s.icon}
             </div>
             <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">{s.count}</h3>
-            <p className="text-xs text-gray-500 mt-1 leading-tight">{s.title}</p>
+            <p className="text-xs text-black font-medium mt-1 leading-tight">{s.title}</p>
             <ArrowUpRight size={14} className="mt-2 text-gray-300 group-hover:text-gray-500 transition-colors" />
           </Link>
         ))}
@@ -63,7 +63,7 @@ function AdminDashboard() {
             <Link key={i} to={q.path} className="bg-white p-4 rounded-xl border border-gray-100 hover:shadow-md hover:border-blue-200 transition-all flex items-center justify-between gap-4 group">
               <div className="min-w-0">
                 <p className="font-semibold text-gray-900 text-sm group-hover:text-blue-600 transition-colors">{q.name}</p>
-                <p className="text-xs text-gray-500 mt-0.5 truncate">{q.desc}</p>
+                <p className="text-xs text-black mt-0.5 truncate">{q.desc}</p>
               </div>
               <ArrowUpRight size={18} className="text-gray-300 group-hover:text-blue-500 flex-shrink-0 transition-colors" />
             </Link>

@@ -9,19 +9,22 @@ function Home() {
   const [hero, setHero] = useState(null);
   const [services, setServices] = useState([]);
   const [team, setTeam] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [heroRes, servRes, teamRes] = await Promise.all([
+        const [heroRes, servRes, teamRes, testRes] = await Promise.all([
           api.get('/content/hero'),
           api.get('/content/services'),
-          api.get('/content/team')
+          api.get('/content/team'),
+          api.get('/content/testimonials')
         ]);
         setHero(heroRes.data);
         setServices(servRes.data.slice(0, 6)); // First 6 services
         setTeam(teamRes.data.slice(0, 4)); // First 4 team members
+        setTestimonials(testRes.data.slice(0, 3)); // First 3 testimonials
       } catch (error) {
         toast.error('Failed to load dynamic content');
       } finally {
@@ -120,6 +123,30 @@ function Home() {
           View All Services
         </button>
       </section>
+
+      {/* Customer Feedback */}
+      {testimonials.length > 0 && (
+        <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+          <p className="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">Reviews</p>
+          <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 dark:text-white mb-4">Customer's Feedback</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">Some valuable feedback from our valued customers</p>
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {testimonials.map((r,i) => (
+              <motion.div key={r._id} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*0.1}} className="bg-white dark:bg-dark-surface p-8 rounded-xl shadow-soft border border-gray-100 dark:border-dark-border text-left card-hover">
+                <div className="flex text-yellow-400 mb-4 text-xl">{'★'.repeat(r.rating||5)}{'☆'.repeat(5-(r.rating||5))}</div>
+                <p className="text-gray-600 dark:text-gray-300 italic mb-6">"{r.review || r.text}"</p>
+                <div className="flex items-center gap-3">
+                  {r.customerPhoto || r.image ? <img src={r.customerPhoto || r.image} alt={r.name} className="w-10 h-10 rounded-full object-cover"/> : <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600">{r.name?.[0]}</div>}
+                  <span className="font-bold text-gray-900 dark:text-white">{r.name}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          <button onClick={() => navigate('/testimonials')} className="bg-white border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-md font-bold shadow hover:bg-blue-50 transition-colors">
+            View All Reviews
+          </button>
+        </section>
+      )}
       
     </div>
   );
