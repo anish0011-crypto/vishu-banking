@@ -20,9 +20,9 @@ function TeamMember() {
     <div className="py-20 px-4 max-w-3xl mx-auto">
       <button onClick={()=>navigate('/team')} className="text-blue-500 mb-8 flex items-center gap-2 hover:underline">&larr; Back to Team</button>
       <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} className="bg-white dark:bg-dark-surface rounded-2xl shadow-xl p-8 text-center">
-        {member.profilePhoto ? <img src={member.profilePhoto} alt={member.name} className="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-blue-100 shadow-lg"/> : <div className="w-32 h-32 rounded-full mx-auto mb-6 bg-blue-100 flex items-center justify-center text-5xl font-bold text-blue-600">{member.name[0]}</div>}
+        {member.profilePhoto || member.image ? <img src={member.profilePhoto || member.image} alt={member.name} className="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-blue-100 shadow-lg"/> : <div className="w-32 h-32 rounded-full mx-auto mb-6 bg-blue-100 flex items-center justify-center text-5xl font-bold text-blue-600">{member.name?.[0]}</div>}
         <h1 className="text-3xl font-heading font-bold text-gray-900 dark:text-white mb-1">{member.name}</h1>
-        <p className="text-blue-600 font-semibold mb-1">{member.designation}</p>
+        <p className="text-blue-600 font-semibold mb-1">{member.designation || member.role}</p>
         <p className="text-gray-500 text-sm mb-4">{member.experience} Experience</p>
         {member.description && <p className="text-gray-600 dark:text-gray-400 mb-6">{member.description}</p>}
         <div className="flex justify-center gap-4 flex-wrap">

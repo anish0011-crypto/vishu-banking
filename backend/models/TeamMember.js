@@ -12,7 +12,14 @@ const teamMemberSchema = new mongoose.Schema({
   mobile: { type: String },
   profilePhoto: { type: String },
   coverImage: { type: String },
-  orderIndex: { type: Number, default: 0 }
+  orderIndex: { type: Number, default: 0 },
+  role: { type: String },
+  image: { type: String },
+  socialLinks: {
+    facebook: String,
+    instagram: String,
+    linkedin: String
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('TeamMember', teamMemberSchema);

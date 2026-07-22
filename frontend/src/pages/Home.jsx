@@ -108,7 +108,7 @@ function Home() {
           {services.map((s, i) => (
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} key={s._id} className="bg-white dark:bg-dark-surface border border-gray-100 dark:border-dark-border p-8 rounded-xl card-hover flex flex-col items-center">
               <div className="w-16 h-16 bg-blue-50 dark:bg-slate-800 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400 mb-6 overflow-hidden">
-                {s.logoImage ? <img src={s.logoImage} alt={s.title} className="w-full h-full object-cover" /> : <div className="text-xl font-bold">{s.title[0]}</div>}
+                {s.logoImage ? <img src={s.logoImage} alt={s.title} className="w-full h-full object-cover" /> : <div className="text-xl font-bold">{s.title?.[0]}</div>}
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{s.title}</h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 flex-grow">{s.description}</p>

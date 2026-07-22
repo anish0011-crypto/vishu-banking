@@ -55,7 +55,7 @@ export default function AdminTestimonials() {
         <div className="divide-y">
           {items.map(t => (
             <div key={t._id} className="p-4 flex items-start gap-4">
-              {t.customerPhoto ? <img src={t.customerPhoto} className="w-12 h-12 rounded-full object-cover flex-shrink-0"/> : <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600 flex-shrink-0">{t.name[0]}</div>}
+              {t.customerPhoto ? <img src={t.customerPhoto} className="w-12 h-12 rounded-full object-cover flex-shrink-0"/> : <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600 flex-shrink-0">{t.name?.[0]}</div>}
               <div className="flex-1">
                 <div className="font-bold text-gray-900">{t.name}</div>
                 <div className="text-yellow-400 text-sm">{'★'.repeat(t.rating)}{'☆'.repeat(5-t.rating)}</div>

@@ -69,9 +69,9 @@ export default function AdminTeam() {
           <tbody>
             {members.map(m => (
               <tr key={m._id} className="border-b hover:bg-gray-50">
-                <td className="p-3">{m.profilePhoto ? <img src={m.profilePhoto} className="w-10 h-10 rounded-full object-cover"/> : <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600">{m.name[0]}</div>}</td>
+                <td className="p-3">{m.profilePhoto || m.image ? <img src={m.profilePhoto || m.image} className="w-10 h-10 rounded-full object-cover"/> : <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600">{m.name?.[0]}</div>}</td>
                 <td className="p-3 font-medium">{m.name}</td>
-                <td className="p-3 text-gray-500">{m.designation}</td>
+                <td className="p-3 text-gray-500">{m.designation || m.role}</td>
                 <td className="p-3 flex gap-2">
                   <button onClick={()=>{setEditing(m._id);setForm(m);}} className="text-blue-600 text-xs border border-blue-200 px-2 py-1 rounded">Edit</button>
                   <button onClick={()=>del(m._id)} className="text-red-600 text-xs border border-red-200 px-2 py-1 rounded">Delete</button>

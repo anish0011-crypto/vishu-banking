@@ -23,9 +23,9 @@ function Services() {
         {services.map((s, i) => (
           <motion.div key={s._id} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*0.1}} className="bg-white dark:bg-dark-surface border border-gray-100 dark:border-dark-border p-8 rounded-xl card-hover flex flex-col items-center">
             <div className="w-16 h-16 bg-blue-50 dark:bg-slate-800 rounded-full flex items-center justify-center text-blue-600 mb-6 overflow-hidden">
-              {s.logoImage ? <img src={s.logoImage} alt={s.title} className="w-full h-full object-cover"/> : <span className="text-2xl font-bold">{s.title[0]}</span>}
+              {s.logoImage ? <img src={s.logoImage} alt={s.title || s.name} className="w-full h-full object-cover"/> : <span className="text-2xl font-bold">{(s.title || s.name || '?')[0]}</span>}
             </div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{s.title}</h3>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{s.title || s.name}</h3>
             <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 flex-grow">{s.description}</p>
             <button onClick={()=>navigate('/services/'+s._id)} className="w-full text-blue-600 font-medium border border-blue-600 px-6 py-2 rounded hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors">Know More</button>
           </motion.div>
