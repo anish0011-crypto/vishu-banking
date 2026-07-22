@@ -27,9 +27,14 @@ app.use('/api/upload', uploadRoutes);
 // Serve uploaded images as static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+const seedDatabase = require('./seed-admin');
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('MongoDB connected successfully'))
+  .then(async () => {
+    console.log('MongoDB connected successfully');
+    await seedDatabase();
+  })
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Start server
