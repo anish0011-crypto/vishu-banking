@@ -40,7 +40,9 @@ export default function AdminTeam() {
   };
 
   return (
-    <div className="grid lg:grid-cols-3 gap-8">
+    <div className="space-y-4">
+      <h1 className="text-lg sm:text-xl font-bold text-gray-900">Manage Team</h1>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div className="bg-white p-6 rounded-xl shadow-sm border">
         <h2 className="text-xl font-bold mb-4">{editing ? 'Edit Member' : 'Add Member'}</h2>
         <form onSubmit={handleSubmit} className="space-y-3">
@@ -81,6 +83,7 @@ export default function AdminTeam() {
             {members.length===0 && <tr><td colSpan="4" className="p-6 text-center text-gray-400">No members yet. Add one!</td></tr>}
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   );

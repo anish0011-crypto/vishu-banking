@@ -55,7 +55,9 @@ function AdminServices() {
   };
 
   return (
-    <div className="grid lg:grid-cols-3 gap-8">
+    <div className="space-y-4">
+      <h1 className="text-lg sm:text-xl font-bold text-gray-900">Manage Services</h1>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div className="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
         <h2 className="text-xl font-bold mb-6">{editingId ? 'Edit Service' : 'Add New Service'}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -100,6 +102,7 @@ function AdminServices() {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   );

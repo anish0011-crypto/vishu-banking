@@ -26,8 +26,9 @@ export default function AdminMessages() {
 
   return (
     <div className="space-y-4">
+      <h1 className="text-lg sm:text-xl font-bold text-gray-900">Contact Messages ({msgs.length})</h1>
       {msgs.map(m => (
-        <div key={m._id} className="bg-white p-5 rounded-xl shadow-sm border flex flex-col sm:flex-row gap-4 justify-between">
+        <div key={m._id} className="bg-white p-4 sm:p-5 rounded-xl shadow-sm border flex flex-col sm:flex-row gap-4 justify-between">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
               <span className="font-bold text-gray-900">{m.name}</span>
