@@ -43,48 +43,48 @@ function Contact() {
         </p>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 -mt-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10 -mt-6 sm:-mt-10">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-20">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
-            <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-gray-900 dark:text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-gray-900 dark:text-white mb-4 sm:mb-6">
               Let's Start a Conversation
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-10 leading-relaxed text-lg">
+            <p className="text-gray-600 dark:text-gray-400 mb-8 sm:mb-10 leading-relaxed text-base sm:text-lg">
               Have questions about our banking services, partnerships, or career opportunities? Fill out the form or reach out directly using the information below. We aim to respond to all inquiries within 24 hours.
             </p>
 
-            <div className="space-y-8">
-              <div className="flex items-start gap-6 bg-gray-50 dark:bg-dark-surface p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-soft">
-                <div className="w-14 h-14 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 text-2xl flex-shrink-0">
+            <div className="space-y-6 sm:space-y-8">
+              <div className="flex items-start gap-4 sm:gap-6 bg-gray-50 dark:bg-dark-surface p-5 sm:p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-soft flex-col sm:flex-row">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 text-xl sm:text-2xl flex-shrink-0">
                   📞
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">Phone</h4>
-                  <p className="text-xl font-bold text-gray-900 dark:text-white">9506562637</p>
-                  <p className="text-sm text-gray-500 mt-1">Available Mon-Sat, 9 AM - 6 PM</p>
+                  <h4 className="text-xs sm:text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1 sm:mb-2">Phone</h4>
+                  <p className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">9506562637</p>
+                  <p className="text-xs sm:text-sm text-gray-500 mt-1">Available Mon-Sat, 9 AM - 6 PM</p>
                 </div>
               </div>
               
-              <div className="flex items-start gap-6 bg-gray-50 dark:bg-dark-surface p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-soft">
-                <div className="w-14 h-14 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 text-2xl flex-shrink-0">
+              <div className="flex items-start gap-4 sm:gap-6 bg-gray-50 dark:bg-dark-surface p-5 sm:p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-soft flex-col sm:flex-row">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 text-xl sm:text-2xl flex-shrink-0">
                   ✉️
                 </div>
-                <div>
-                  <h4 className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">Email</h4>
-                  <a href="mailto:vishwajeetbankingpoint@gmail.com" className="text-lg font-bold text-blue-600 dark:text-blue-400 hover:underline">
+                <div className="overflow-hidden w-full">
+                  <h4 className="text-xs sm:text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1 sm:mb-2">Email</h4>
+                  <a href="mailto:vishwajeetbankingpoint@gmail.com" className="text-base sm:text-lg font-bold text-blue-600 dark:text-blue-400 hover:underline break-all">
                     vishwajeetbankingpoint@gmail.com
                   </a>
-                  <p className="text-sm text-gray-500 mt-1">For general inquiries and support</p>
+                  <p className="text-xs sm:text-sm text-gray-500 mt-1">For general inquiries and support</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-6 bg-gray-50 dark:bg-dark-surface p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-soft">
-                <div className="w-14 h-14 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 text-2xl flex-shrink-0">
+              <div className="flex items-start gap-4 sm:gap-6 bg-gray-50 dark:bg-dark-surface p-5 sm:p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-soft flex-col sm:flex-row">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 text-xl sm:text-2xl flex-shrink-0">
                   📍
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">Address</h4>
-                  <p className="text-gray-900 dark:text-white font-medium leading-relaxed">
+                  <h4 className="text-xs sm:text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1 sm:mb-2">Address</h4>
+                  <p className="text-sm sm:text-base text-gray-900 dark:text-white font-medium leading-relaxed">
                     Main Market, Nearby Sabji Mandi<br/>
                     Dildarnagar, Ghazipur<br/>
                     Uttar Pradesh – 232326
@@ -95,9 +95,9 @@ function Contact() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.2 }}>
-            <div className="bg-white dark:bg-dark-surface p-8 md:p-10 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-2xl shadow-gray-200/50 dark:shadow-none">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Send us a message</h3>
-              <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="bg-white dark:bg-dark-surface p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl border border-gray-100 dark:border-gray-800 shadow-xl shadow-gray-200/50 dark:shadow-none">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8">Send us a message</h3>
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                 <div>
                   <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Full Name *</label>
                   <input type="text" name="name" required value={formData.name} onChange={handleChange}
