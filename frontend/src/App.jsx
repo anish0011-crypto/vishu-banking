@@ -16,6 +16,7 @@ import Testimonials from './pages/Testimonials';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import PageTransition from './components/PageTransition';
 
 // Admin Pages
 import AdminLayout from './components/AdminLayout';
@@ -73,15 +74,15 @@ function App() {
         <Layout toggleTheme={toggleTheme} isDark={isDark}>
           <Routes>
             {/* Public Routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/services/:id" element={<ServiceDetail />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="/team/:id" element={<TeamMember />} />
-            <Route path="/career" element={<Career />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+            <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+            <Route path="/services" element={<PageTransition><Services /></PageTransition>} />
+            <Route path="/services/:id" element={<PageTransition><ServiceDetail /></PageTransition>} />
+            <Route path="/team" element={<PageTransition><Team /></PageTransition>} />
+            <Route path="/team/:id" element={<PageTransition><TeamMember /></PageTransition>} />
+            <Route path="/career" element={<PageTransition><Career /></PageTransition>} />
+            <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+            <Route path="/testimonials" element={<PageTransition><Testimonials /></PageTransition>} />
             
             {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLogin />} />

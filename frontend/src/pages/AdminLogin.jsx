@@ -50,6 +50,16 @@ function AdminLogin() {
           <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded font-bold transition-colors shadow-lg">
             Login to Dashboard
           </button>
+          
+          <div className="mt-6 text-center">
+            <button 
+              type="button" 
+              onClick={() => navigate('/')} 
+              className="text-slate-400 hover:text-white transition-colors text-sm flex items-center justify-center gap-2 mx-auto"
+            >
+              <span>←</span> Back to Website
+            </button>
+          </div>
         </form>
       </div>
     </div>

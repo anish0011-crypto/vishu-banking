@@ -31,16 +31,30 @@ function About() {
               <button onClick={()=>navigate('/services')} className="border border-blue-600 text-blue-600 px-8 py-3 rounded-md font-bold hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors">Our Services</button>
             </div>
           </motion.div>
-          <motion.div initial={{opacity:0,x:30}} animate={{opacity:1,x:0}} transition={{duration:0.6,delay:0.2}} className="bg-gradient-to-br from-blue-600 to-blue-900 text-white p-8 rounded-2xl shadow-2xl">
-            <h3 className="text-2xl font-bold mb-6">Official Partnerships</h3>
-            <ul className="space-y-3">
-              {['Manager @ Airtel Payments Bank (behalf of RBI)','BDE @ Google Pay Business','Distributor @ RapiPay Fintech Pvt. Ltd.','Distributor @ ReliPay Fintech Pvt. Ltd.','Distributor @ PhonePe Business Pvt. Ltd.'].map((item,i)=>
-                <li key={i} className="flex items-start gap-3 text-blue-100"><span className="text-blue-300 mt-0.5">✓</span>{item}</li>
-              )}
-            </ul>
-            <div className="mt-6 pt-6 border-t border-blue-700">
-              <p className="text-blue-300 text-sm">GST Number: 09EMHPR1060Q1ZD</p>
-              <p className="text-blue-300 text-sm">Contact: 9506562637</p>
+          <motion.div initial={{opacity:0,x:30}} animate={{opacity:1,x:0}} transition={{duration:0.6,delay:0.2}} className="relative">
+            <div className="absolute inset-0 bg-blue-500 rounded-3xl blur-2xl opacity-20 transform rotate-3"></div>
+            <div className="relative bg-white dark:bg-dark-surface rounded-3xl overflow-hidden shadow-2xl border border-gray-100 dark:border-gray-800">
+              <img src="/images/team.png" alt="Our Team" className="w-full h-64 object-cover" />
+              <div className="p-8 bg-gradient-to-br from-blue-600 to-blue-900 text-white">
+                <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                  <span className="bg-white/20 p-2 rounded-lg">🤝</span> Official Partnerships
+                </h3>
+                <ul className="space-y-3">
+                  {['Manager @ Airtel Payments Bank (behalf of RBI)','BDE @ Google Pay Business','Distributor @ RapiPay Fintech Pvt. Ltd.','Distributor @ ReliPay Fintech Pvt. Ltd.','Distributor @ PhonePe Business Pvt. Ltd.'].map((item,i)=>
+                    <li key={i} className="flex items-start gap-3 text-blue-100"><span className="text-blue-300 mt-0.5">✓</span>{item}</li>
+                  )}
+                </ul>
+                <div className="mt-6 pt-6 border-t border-blue-700/50 flex flex-wrap gap-6">
+                  <div>
+                    <p className="text-blue-300 text-xs uppercase tracking-wider mb-1">GST Number</p>
+                    <p className="font-mono font-bold">09EMHPR1060Q1ZD</p>
+                  </div>
+                  <div>
+                    <p className="text-blue-300 text-xs uppercase tracking-wider mb-1">Contact</p>
+                    <p className="font-mono font-bold">9506562637</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>

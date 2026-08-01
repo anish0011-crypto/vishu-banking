@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore QuickCloud's powerful hosting features - NVMe SSD, free SSL, CDN, one-click installs, and 24/7 support.">
+  <title>Features - QuickCloud | Premium Web Hosting</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .feature-big-card {
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px;
+      padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+      margin-bottom: 32px; transition: var(--transition);
+    }
+    .feature-big-card:hover { border-color: rgba(108,99,255,0.3); box-shadow: var(--shadow); }
+    .feature-big-card.reverse { direction: rtl; }
+    .feature-big-card.reverse > * { direction: ltr; }
+    .feature-big-visual {
+      background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(0,212,255,0.05));
+      border: 1px solid rgba(108,99,255,0.15); border-radius: 20px;
+      height: 280px; display: flex; align-items: center; justify-content: center;
+      font-size: 80px; position: relative; overflow: hidden;
+    }
+    .feature-big-tag {
+      font-size: 12px; font-weight: 700; color: var(--primary);
+      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .feature-big-title {
+      font-family: 'Outfit', sans-serif; font-size: 28px; font-weight: 800;
+      margin-bottom: 16px; line-height: 1.3;
+    }
+    .feature-big-title span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .feature-big-desc { color: var(--text-muted); font-size: 15px; line-height: 1.8; margin-bottom: 24px; }
+    .feature-mini-list { display: flex; flex-direction: column; gap: 10px; }
+    .feature-mini-item { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+    .feature-mini-item i { color: var(--primary); width: 16px; }
+
+    .spec-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .spec-card {
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px;
+      padding: 28px; text-align: center; transition: var(--transition);
+    }
+    .spec-card:hover { border-color: rgba(108,99,255,0.3); transform: translateY(-4px); }
+    .spec-icon { font-size: 36px; margin-bottom: 12px; }
+    .spec-value { font-family: 'Outfit', sans-serif; font-size: 28px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
+    .spec-label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+
+    @media(max-width:768px){
+      .feature-big-card { grid-template-columns: 1fr; padding: 28px; }
+      .feature-big-card.reverse { direction: ltr; }
+      .spec-grid { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+<div id="preloader"><div class="loader-ring"></div></div>
+
+<div class="modal-overlay" id="loginModal">
+  <div class="modal-box">
+    <div class="modal-header"><h2 class="modal-title">Welcome Back ✨</h2><button class="modal-close">✕</button></div>
+    <div class="modal-tabs"><button class="modal-tab active" data-tab="loginForm">Login</button><button class="modal-tab" data-tab="registerForm">Register</button></div>
+    <div id="loginForm" class="modal-tab-content"><div class="form-group"><label class="form-label">Email</label><input type="email" class="form-control" placeholder="your@email.com"></div><div class="form-group"><label class="form-label">Password</label><input type="password" class="form-control" placeholder="••••••••"></div><button class="btn-primary-glow" style="width:100%;justify-content:center;margin-top:8px;">Login</button></div>
+    <div id="registerForm" class="modal-tab-content" style="display:none"><div class="form-group"><label class="form-label">Name</label><input type="text" class="form-control" placeholder="Your Name"></div><div class="form-group"><label class="form-label">Email</label><input type="email" class="form-control" placeholder="your@email.com"></div><div class="form-group"><label class="form-label">Password</label><input type="password" class="form-control" placeholder="••••••••"></div><button class="btn-primary-glow" style="width:100%;justify-content:center;margin-top:8px;">Register</button></div>
+  </div>
+</div>
+
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="index.html" class="navbar-brand"><div class="logo-icon">☁</div>QuickCloud</a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link">About Us</a></li>
+      <li><a href="features.html" class="nav-link active">Features</a></li>
+      <li class="nav-dropdown">
+        <a href="hosting.html" class="nav-link dropdown-toggle">Hosting <i class="fas fa-chevron-down" style="font-size:10px;"></i></a>
+        <div class="dropdown-menu">
+          <a href="hosting.html#shared" class="dropdown-item"><i class="fas fa-server" style="width:16px;"></i> Shared Hosting</a>
+          <a href="hosting.html#wordpress" class="dropdown-item"><i class="fab fa-wordpress" style="width:16px;"></i> WordPress Hosting</a>
+          <a href="hosting.html#vps" class="dropdown-item"><i class="fas fa-cloud" style="width:16px;"></i> VPS / Cloud</a>
+          <a href="hosting.html#reseller" class="dropdown-item"><i class="fas fa-network-wired" style="width:16px;"></i> Reseller Package</a>
+          <a href="hosting.html#dedicated" class="dropdown-item"><i class="fas fa-database" style="width:16px;"></i> Dedicated Server</a>
+        </div>
+      </li>
+      <li><a href="domain.html" class="nav-link">Domain</a></li>
+      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="admin.html" class="btn-nav-login"><i class="fas fa-lock" style="font-size:12px;margin-right:4px;"></i> Admin</a>
+      <a href="#" class="btn-nav-cta" data-modal="login">Customer Login</a>
+    </div>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<div class="page-title-box">
+  <div class="container">
+    <h1>Powerful Features</h1>
+    <p>Everything you need to build, grow, and scale your online presence. Enterprise features at affordable prices.</p>
+    <nav class="breadcrumb-nav"><a href="index.html">Home</a> <span>/</span> <span>Features</span></nav>
+  </div>
+</div>
+
+<!-- Quick Specs -->
+<section class="section">
+  <div class="container">
+    <div class="spec-grid animate-on-scroll">
+      <div class="spec-card">
+        <div class="spec-icon">⚡</div>
+        <div class="spec-value">10x</div>
+        <div class="spec-label">Faster than traditional hosting</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-icon">🛡️</div>
+        <div class="spec-value">99.9%</div>
+        <div class="spec-label">Guaranteed Uptime SLA</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-icon">🌍</div>
+        <div class="spec-value">50+</div>
+        <div class="spec-label">Global CDN Locations</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-icon">💬</div>
+        <div class="spec-value">&lt;2m</div>
+        <div class="spec-label">Average Support Response</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Feature Highlights -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <div class="section-tag">Features</div>
+      <h2 class="section-title">Built for <span>Performance</span></h2>
+    </div>
+
+    <div class="feature-big-card animate-on-scroll">
+      <div>
+        <div class="feature-big-tag">⚡ Speed & Performance</div>
+        <h2 class="feature-big-title">NVMe SSD Storage with <span>LiteSpeed</span> Web Server</h2>
+        <p class="feature-big-desc">Our hosting infrastructure uses the latest NVMe solid-state drives, which are up to 6x faster than standard SSDs. Combined with LiteSpeed web server and built-in caching, your site loads in milliseconds.</p>
+        <div class="feature-mini-list">
+          <div class="feature-mini-item"><i class="fas fa-check"></i> NVMe SSD for blazing read/write speeds</div>
+          <div class="feature-mini-item"><i class="fas fa-check"></i> LiteSpeed web server with LSAPI</div>
+          <div class="feature-mini-item"><i class="fas fa-check"></i> Built-in object caching with Redis</div>
+          <div class="feature-mini-item"><i class="fas fa-check"></i> HTTP/3 and QUIC protocol support</div>
+        </div>
+      </div>
+      <div class="feature-big-visual">
+        ⚡
+        <div style="position:absolute;bottom:20px;left:20px;right:20px;background:rgba(0,0,0,0.5);border-radius:12px;padding:16px;">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:8px;"><span>Load Time</span><span style="color:#22c55e;font-weight:600;">0.3s</span></div>
+          <div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;"><div style="width:95%;height:100%;background:var(--gradient);border-radius:2px;"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-big-card reverse animate-on-scroll">
+      <div class="feature-big-visual">🔒</div>
+      <div>
+        <div class="feature-big-tag">🔒 Security First</div>
+        <h2 class="feature-big-title">Enterprise-Grade <span>Security</span> Built-In</h2>
+        <p class="feature-big-desc">Every QuickCloud plan includes comprehensive security features to protect your website and data. From free SSL certificates to DDoS protection, your site is secured at every layer.</p>
+        <div class="feature-mini-list">
+          <div class="feature-mini-item"><i class="fas fa-check"></i> Free Let's Encrypt SSL certificates</div>
+          <div class="feature-mini-item"><i class="fas fa-check"></i> DDoS protection up to 1 Tbps</div>
+          <div class="feature-mini-item"><i class="fas fa-check"></i> Malware scanning & auto-removal</div>
+          <div class="feature-mini-item"><i class="fas fa-check"></i> Daily automated backups</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-big-card animate-on-scroll">
+      <div>
+        <div class="feature-big-tag">🌍 Global Network</div>
+        <h2 class="feature-big-title">50+ CDN Locations for <span>Global Speed</span></h2>
+        <p class="feature-big-desc">Our global Content Delivery Network caches your website content in 50+ strategic locations worldwide. Visitors get served from the nearest data center, reducing latency dramatically.</p>
+        <div class="feature-mini-list">
+          <div class="feature-mini-item"><i class="fas fa-check"></i> 50+ PoPs across 6 continents</div>
+          <div class="feature-mini-item"><i class="fas fa-check"></i> Intelligent traffic routing</div>
+          <div class="feature-mini-item"><i class="fas fa-check"></i> Static & dynamic content caching</div>
+          <div class="feature-mini-item"><i class="fas fa-check"></i> Edge computing capabilities</div>
+        </div>
+      </div>
+      <div class="feature-big-visual">🌍</div>
+    </div>
+
+    <div class="feature-big-card reverse animate-on-scroll">
+      <div class="feature-big-visual">🔧</div>
+      <div>
+        <div class="feature-big-tag">🔧 Easy Management</div>
+        <h2 class="feature-big-title">cPanel & One-Click <span>Application</span> Install</h2>
+        <p class="feature-big-desc">Manage your hosting with the industry-leading cPanel control panel. Install WordPress, Joomla, and 400+ applications in just one click — no technical knowledge required.</p>
+        <div class="feature-mini-list">
+          <div class="feature-mini-item"><i class="fas fa-check"></i> cPanel control panel included</div>
+          <div class="feature-mini-item"><i class="fas fa-check"></i> Softaculous one-click installer</div>
+          <div class="feature-mini-item"><i class="fas fa-check"></i> File Manager with drag & drop</div>
+          <div class="feature-mini-item"><i class="fas fa-check"></i> phpMyAdmin for database management</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- All Features Grid -->
+<section class="section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <div class="section-tag">All Features</div>
+      <h2 class="section-title">Everything <span>Included</span></h2>
+    </div>
+    <div class="grid-3">
+      <div class="feature-card animate-on-scroll"><div class="feature-icon">📧</div><h3>Professional Email</h3><p>Create unlimited business email accounts with your domain. Includes webmail, spam filtering, and mobile sync.</p></div>
+      <div class="feature-card animate-on-scroll"><div class="feature-icon">💾</div><h3>Daily Backups</h3><p>Automatic daily backups with 30-day retention. One-click restore to any backup point from your dashboard.</p></div>
+      <div class="feature-card animate-on-scroll"><div class="feature-icon">🗄️</div><h3>MySQL Databases</h3><p>Unlimited MySQL databases with full phpMyAdmin access. Support for MySQL 8.0 and MariaDB 10.6.</p></div>
+      <div class="feature-card animate-on-scroll"><div class="feature-icon">🐍</div><h3>Multi-Language Support</h3><p>PHP 8.x, Python, Node.js, Ruby. Multiple PHP versions switchable with one click from cPanel.</p></div>
+      <div class="feature-card animate-on-scroll"><div class="feature-icon">📊</div><h3>Advanced Analytics</h3><p>Detailed visitor statistics, bandwidth usage, error logs and server performance metrics in real-time.</p></div>
+      <div class="feature-card animate-on-scroll"><div class="feature-icon">🔄</div><h3>Free Migration</h3><p>Move your existing website to QuickCloud for free. Our team handles the entire migration with zero downtime.</p></div>
+      <div class="feature-card animate-on-scroll"><div class="feature-icon">🌐</div><h3>Subdomain Support</h3><p>Create unlimited subdomains for staging sites, microsites, and development environments.</p></div>
+      <div class="feature-card animate-on-scroll"><div class="feature-icon">🔗</div><h3>FTP Access</h3><p>Full FTP/SFTP access for direct file transfers. Support for all FTP clients including FileZilla.</p></div>
+      <div class="feature-card animate-on-scroll"><div class="feature-icon">📱</div><h3>Mobile Responsive cPanel</h3><p>Manage your hosting from any device. Our mobile-optimized control panel works perfectly on smartphones.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section section-light">
+  <div class="container">
+    <div class="cta-section animate-on-scroll">
+      <div class="section-tag" style="margin-bottom:20px;">Ready to Start?</div>
+      <h2>Get All These Features <span style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Starting at $4/mo</span></h2>
+      <p>No contracts, no hidden fees. 30-day money-back guarantee on all plans.</p>
+      <div class="cta-actions">
+        <a href="pricing.html" class="btn-primary-glow"><i class="fas fa-rocket"></i> View Pricing</a>
+        <a href="contact.html" class="btn-outline-glow"><i class="fas fa-headset"></i> Talk to Expert</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="navbar-brand" style="margin-bottom:16px;display:inline-flex;"><div class="logo-icon">☁</div>QuickCloud</a><p>Premium hosting with enterprise features at affordable prices.</p><div class="social-links"><a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-link"><i class="fab fa-twitter"></i></a><a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a><a href="#" class="social-link"><i class="fab fa-github"></i></a></div></div>
+      <div><div class="footer-heading">Quick Links</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="features.html">Features</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div><div class="footer-heading">Hosting</div><ul class="footer-links"><li><a href="hosting.html">Shared</a></li><li><a href="hosting.html">WordPress</a></li><li><a href="hosting.html">VPS</a></li><li><a href="hosting.html">Dedicated</a></li><li><a href="domain.html">Domains</a></li></ul></div>
+      <div><div class="footer-heading">Contact</div><ul class="footer-links"><li><a href="mailto:info@quickcloud.com">📧 info@quickcloud.com</a></li><li><a href="tel:+918376628400">📞 +91 83766 28400</a></li><li><span>📍 Sector 62, Noida</span></li></ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;"><p>&copy; 2024 QuickCloud. All Rights Reserved.</p><p><a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Terms</a> &nbsp;·&nbsp; <a href="admin.html">Admin</a></p></div></div></div>
+</footer>
+
+<button class="scroll-top" aria-label="Scroll to top"><i class="fas fa-chevron-up"></i></button>
+<script src="main.js"></script>
+</body>
+</html>

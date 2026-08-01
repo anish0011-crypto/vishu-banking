@@ -1,83 +1,141 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
-import api from '../api';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 
-function Contact() {
-  const [form, setForm] = useState({ name:'', email:'', mobile:'', subject:'', message:'' });
-  const [submitting, setSubmitting] = useState(false);
+import api from '../api';
 
-  const handleChange = (e) => setForm({...form, [e.target.name]: e.target.value});
+function Contact() {
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', query: '' });
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true);
+    setLoading(true);
     try {
-      await api.post('/content/contact', form);
-      toast.success('Message sent! We will get back to you soon.');
-      setForm({ name:'', email:'', mobile:'', subject:'', message:'' });
-    } catch(err) {
-      toast.error(err.response?.data?.message || 'Failed to send. Please try again.');
+      const messageData = {
+        name: formData.name,
+        email: formData.email,
+        mobile: formData.phone,
+        subject: 'General Inquiry',
+        message: formData.query
+      };
+      
+      await api.post('/applications/contact', messageData);
+      
+      toast.success('Message sent successfully! We will get back to you shortly.');
+      setFormData({ name: '', email: '', phone: '', query: '' });
+    } catch (err) {
+      toast.error('Failed to send message. Please try again.');
+      console.error(err);
     } finally {
-      setSubmitting(false);
+      setLoading(false);
     }
   };
 
-  const contactInfo = [
-    { icon:'📍', title:'Address', detail:'Main Market, Nearby Sabji Mandi, Dildarnagar, Ghazipur, Uttar Pradesh – 232326' },
-    { icon:'📞', title:'Phone', detail:'9506562637', href:'tel:9506562637' },
-    { icon:'✉️', title:'Email', detail:'vishwajeetbankingpoint@gmail.com', href:'mailto:vishwajeetbankingpoint@gmail.com' },
-    { icon:'💬', title:'WhatsApp', detail:'9506562637', href:'https://wa.me/919506562637' },
-    { icon:'🕒', title:'Business Hours', detail:'Mon - Sat: 9:00 AM – 6:00 PM' },
-  ];
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   return (
-    <div className="py-20 px-4 max-w-7xl mx-auto">
-      <div className="text-center mb-12">
-        <p className="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">Contact Us</p>
-        <h1 className="text-4xl font-heading font-extrabold text-gray-900 dark:text-white mb-4">Get In Touch</h1>
-        <p className="text-gray-600 dark:text-gray-400">We'd love to hear from you. Send us a message!</p>
+    <div className="bg-white dark:bg-dark-bg text-gray-800 dark:text-gray-200 transition-colors duration-300 min-h-screen pb-20">
+      <div className="bg-gradient-to-r from-blue-900 to-sky-800 text-white py-24 px-4 text-center">
+        <h1 className="text-4xl md:text-5xl font-heading font-extrabold mb-6">Get in Touch</h1>
+        <p className="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">
+          For more information, partnerships, or any queries, please reach out to us. We are here to help you.
+        </p>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8 mb-8">
-        {/* Contact Form */}
-        <motion.div initial={{opacity:0,x:-20}} animate={{opacity:1,x:0}} className="bg-white dark:bg-dark-surface p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-dark-border">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Send a Message</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div><label className="block text-sm font-semibold mb-1">Name <span className="text-red-500">*</span></label><input required type="text" name="name" value={form.name} onChange={handleChange} className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-gray-50 dark:bg-dark-bg focus:ring-2 focus:ring-blue-500 outline-none"/></div>
-              <div><label className="block text-sm font-semibold mb-1">Email <span className="text-red-500">*</span></label><input required type="email" name="email" value={form.email} onChange={handleChange} className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-gray-50 dark:bg-dark-bg focus:ring-2 focus:ring-blue-500 outline-none"/></div>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div><label className="block text-sm font-semibold mb-1">Mobile</label><input type="tel" name="mobile" value={form.mobile} onChange={handleChange} className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-gray-50 dark:bg-dark-bg focus:ring-2 focus:ring-blue-500 outline-none"/></div>
-              <div><label className="block text-sm font-semibold mb-1">Subject</label><input type="text" name="subject" value={form.subject} onChange={handleChange} className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-gray-50 dark:bg-dark-bg focus:ring-2 focus:ring-blue-500 outline-none"/></div>
-            </div>
-            <div><label className="block text-sm font-semibold mb-1">Message <span className="text-red-500">*</span></label><textarea required name="message" value={form.message} onChange={handleChange} rows="5" className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-gray-50 dark:bg-dark-bg focus:ring-2 focus:ring-blue-500 outline-none"></textarea></div>
-            <button type="submit" disabled={submitting} className="w-full bg-blue-600 text-white font-bold py-3 rounded-lg shadow hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
-              {submitting ? (<><svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>Sending...</>) : 'Send Message'}
-            </button>
-          </form>
-        </motion.div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 -mt-10">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
+            <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-gray-900 dark:text-white mb-6">
+              Let's Start a Conversation
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-10 leading-relaxed text-lg">
+              Have questions about our banking services, partnerships, or career opportunities? Fill out the form or reach out directly using the information below. We aim to respond to all inquiries within 24 hours.
+            </p>
 
-        {/* Contact Info */}
-        <motion.div initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} className="space-y-4">
-          {contactInfo.map((c, i) => (
-            <div key={i} className="bg-white dark:bg-dark-surface p-5 rounded-xl border border-gray-100 dark:border-dark-border flex items-start gap-4 shadow-soft card-hover">
-              <div className="w-12 h-12 bg-blue-50 dark:bg-slate-800 rounded-full flex items-center justify-center text-xl flex-shrink-0">{c.icon}</div>
-              <div>
-                <h4 className="font-bold text-gray-900 dark:text-white">{c.title}</h4>
-                {c.href ? <a href={c.href} className="text-blue-600 hover:underline text-sm">{c.detail}</a> : <p className="text-gray-600 dark:text-gray-400 text-sm">{c.detail}</p>}
+            <div className="space-y-8">
+              <div className="flex items-start gap-6 bg-gray-50 dark:bg-dark-surface p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-soft">
+                <div className="w-14 h-14 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 text-2xl flex-shrink-0">
+                  📞
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">Phone</h4>
+                  <p className="text-xl font-bold text-gray-900 dark:text-white">9506562637</p>
+                  <p className="text-sm text-gray-500 mt-1">Available Mon-Sat, 9 AM - 6 PM</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-6 bg-gray-50 dark:bg-dark-surface p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-soft">
+                <div className="w-14 h-14 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 text-2xl flex-shrink-0">
+                  ✉️
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">Email</h4>
+                  <a href="mailto:vishwajeetbankingpoint@gmail.com" className="text-lg font-bold text-blue-600 dark:text-blue-400 hover:underline">
+                    vishwajeetbankingpoint@gmail.com
+                  </a>
+                  <p className="text-sm text-gray-500 mt-1">For general inquiries and support</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-6 bg-gray-50 dark:bg-dark-surface p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-soft">
+                <div className="w-14 h-14 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 text-2xl flex-shrink-0">
+                  📍
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">Address</h4>
+                  <p className="text-gray-900 dark:text-white font-medium leading-relaxed">
+                    Main Market, Nearby Sabji Mandi<br/>
+                    Dildarnagar, Ghazipur<br/>
+                    Uttar Pradesh – 232326
+                  </p>
+                </div>
               </div>
             </div>
-          ))}
-        </motion.div>
-      </div>
+          </motion.div>
 
-      {/* Google Map */}
-      <div className="rounded-2xl overflow-hidden shadow-xl h-80">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3600.4184646797177!2d83.74315257444736!3d25.52352227749842!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398e21a2b918f6d7%3A0x643190ab7a6beeb2!2sDildar%20Nagar%2C%20Uttar%20Pradesh%20232326!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" width="100%" height="100%" style={{border:0}} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.2 }}>
+            <div className="bg-white dark:bg-dark-surface p-8 md:p-10 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-2xl shadow-gray-200/50 dark:shadow-none">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Send us a message</h3>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Full Name *</label>
+                  <input type="text" name="name" required value={formData.name} onChange={handleChange}
+                    className="w-full h-14 px-4 rounded-xl bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-colors"
+                  />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Contact number *</label>
+                    <input type="tel" name="phone" required value={formData.phone} onChange={handleChange}
+                      className="w-full h-14 px-4 rounded-xl bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Email (optional)</label>
+                    <input type="email" name="email" value={formData.email} onChange={handleChange}
+                      className="w-full h-14 px-4 rounded-xl bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-colors"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Your query... *</label>
+                  <textarea name="query" required rows="5" value={formData.query} onChange={handleChange}
+                    className="w-full p-4 rounded-xl bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-colors resize-none"
+                  ></textarea>
+                </div>
+                <button type="submit" disabled={loading}
+                  className="w-full h-14 bg-blue-600 text-white font-bold text-lg rounded-xl shadow-lg shadow-blue-500/30 hover:bg-blue-700 transition-all disabled:opacity-70 flex items-center justify-center gap-2"
+                >
+                  {loading ? <span className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></span> : 'Send Message'}
+                </button>
+              </form>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
 }
+
 export default Contact;

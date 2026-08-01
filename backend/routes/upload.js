@@ -29,4 +29,10 @@ router.post('/', auth, upload.single('file'), (req, res) => {
   res.json({ url: fileUrl });
 });
 
+router.post('/public', upload.single('file'), (req, res) => {
+  if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
+  const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  res.json({ url: fileUrl });
+});
+
 module.exports = router;

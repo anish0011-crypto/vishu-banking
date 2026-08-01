@@ -54,13 +54,10 @@ const Footer = () => {
           
         </div>
         
-        <div className="pt-8 border-t border-gray-800 text-center md:flex md:justify-between">
-          <p className="text-gray-500 text-sm mb-4 md:mb-0">
+        <div className="pt-8 border-t border-gray-800 text-center">
+          <p className="text-gray-500 text-sm">
             © {new Date().getFullYear()} Vishwajeet Banking Point Private Limited.
           </p>
-          <div className="flex justify-center space-x-6">
-            <button onClick={() => navigate('/admin/login')} className="text-gray-500 hover:text-white text-sm">Admin Login</button>
-          </div>
         </div>
       </div>
     </footer>
