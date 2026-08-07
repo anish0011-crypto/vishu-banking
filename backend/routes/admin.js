@@ -40,6 +40,13 @@ router.post('/generate-reply', auth, async (req, res) => {
       aiReply = `Dear ${name},\n\nThank you for reaching out to Vishwajeet Banking Point.\n\nWe have received your message and our team is currently reviewing it. We will get back to you with a comprehensive response very soon.\n\nBest regards,\nVishwajeet Banking Point Support Team`;
     }
 
+    // Check email credentials first
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      return res.status(400).json({ 
+        message: 'Email credentials (EMAIL_USER, EMAIL_PASS) are not configured in .env file. Please add them to enable automated email sending.' 
+      });
+    }
+
     // Try to send email
     const transporter = nodemailer.createTransport({
       service: 'gmail', // or standard SMTP settings
@@ -48,12 +55,6 @@ router.post('/generate-reply', auth, async (req, res) => {
         pass: process.env.EMAIL_PASS
       }
     });
-
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-      return res.status(400).json({ 
-        message: 'Email credentials (EMAIL_USER, EMAIL_PASS) are not configured in .env file. Please add them to enable automated email sending.' 
-      });
-    }
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
