@@ -1,25 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const nodemailer = require('nodemailer');
 const auth = require('../middleware/auth');
 const JobApplication = require('../models/JobApplication');
 const ContactMessage = require('../models/ContactMessage');
-
-// ─── Helper: create transporter ────────────────────────────────────────────────
-function createTransporter() {
-  return nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // STARTTLS — required on Render (port 465 is blocked)
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    },
-    tls: {
-      rejectUnauthorized: false
-    }
-  });
-}
+const { sendEmail } = require('../utils/sendEmail');
 
 // ─── Submit job application (public) ───────────────────────────────────────────
 router.post('/jobs', async (req, res) => {
@@ -31,12 +15,11 @@ router.post('/jobs', async (req, res) => {
     res.json({ msg: 'Application submitted successfully' });
 
     // Fire emails in a fully isolated async block
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+    if (process.env.RESEND_API_KEY || (process.env.EMAIL_USER && process.env.EMAIL_PASS)) {
       (async () => {
         try {
           const { name, email, mobile, address, pincode, resumeUrl, aboutYourself } = req.body;
-          const transporter = createTransporter();
-          const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
+          const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'vishwajeetbankingpoint@gmail.com';
           const submittedAt = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
           // ── 1. Admin Notification ────────────────────────────────────────
@@ -93,8 +76,7 @@ router.post('/jobs', async (req, res) => {
 </body>
 </html>`;
 
-          await transporter.sendMail({
-            from: `"Vishwajeet Banking Point" <${process.env.EMAIL_USER}>`,
+          await sendEmail({
             to: adminEmail,
             subject: `📋 New Job Application — ${name || 'Unknown Applicant'}`,
             html: adminHtml
@@ -163,8 +145,7 @@ router.post('/jobs', async (req, res) => {
 </body>
 </html>`;
 
-            await transporter.sendMail({
-              from: `"Vishwajeet Banking Point" <${process.env.EMAIL_USER}>`,
+            await sendEmail({
               to: email,
               subject: `✅ Application Received — Vishwajeet Banking Point`,
               html: applicantHtml
@@ -193,12 +174,11 @@ router.post('/contact', async (req, res) => {
     res.json({ msg: 'Message sent successfully' });
 
     // Fire emails in a fully isolated async block
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+    if (process.env.RESEND_API_KEY || (process.env.EMAIL_USER && process.env.EMAIL_PASS)) {
       (async () => {
         try {
           const { name, email, mobile, subject, message: userMessage } = req.body;
-          const transporter = createTransporter();
-          const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
+          const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'vishwajeetbankingpoint@gmail.com';
           const submittedAt = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
           // ── 1. Admin Notification ────────────────────────────────────────
@@ -253,8 +233,7 @@ router.post('/contact', async (req, res) => {
 </body>
 </html>`;
 
-          await transporter.sendMail({
-            from: `"Vishwajeet Banking Point" <${process.env.EMAIL_USER}>`,
+          await sendEmail({
             to: adminEmail,
             subject: `📬 New Contact: ${name} — ${subject || 'General Inquiry'}`,
             html: adminHtml
@@ -321,8 +300,7 @@ router.post('/contact', async (req, res) => {
 </body>
 </html>`;
 
-            await transporter.sendMail({
-              from: `"Vishwajeet Banking Point" <${process.env.EMAIL_USER}>`,
+            await sendEmail({
               to: email,
               subject: `✅ We received your message — ${subject || 'Your Inquiry to Vishwajeet Banking Point'}`,
               html: userReplyHtml

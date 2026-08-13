@@ -25,7 +25,7 @@ router.get('/verify', auth, (req, res) => {
   res.json({ valid: true, admin: req.admin });
 });
 
-const nodemailer = require('nodemailer');
+const { sendEmail } = require('../utils/sendEmail');
 const ContactMessage = require('../models/ContactMessage'); // Assuming this is needed to update status
 
 router.post('/generate-reply', auth, async (req, res) => {
@@ -41,34 +41,17 @@ router.post('/generate-reply', auth, async (req, res) => {
     }
 
     // Check email credentials first
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    if (!process.env.RESEND_API_KEY && (!process.env.EMAIL_USER || !process.env.EMAIL_PASS)) {
       return res.status(400).json({ 
-        message: 'Email credentials (EMAIL_USER, EMAIL_PASS) are not configured in .env file. Please add them to enable automated email sending.' 
+        message: 'Email credentials (RESEND_API_KEY or EMAIL_USER/EMAIL_PASS) are not configured. Please add them to enable automated email sending.' 
       });
     }
 
-    // Try to send email
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false, // STARTTLS — required on Render (port 465 is blocked)
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      },
-      tls: {
-        rejectUnauthorized: false
-      }
-    });
-
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
+    await sendEmail({
       to: email,
       subject: `Re: ${subject || 'Your Inquiry to Vishwajeet Banking Point'}`,
       text: aiReply
-    };
-
-    await transporter.sendMail(mailOptions);
+    });
     
     // Update message status to 'Replied'
     if (id) {
@@ -78,7 +61,7 @@ router.post('/generate-reply', auth, async (req, res) => {
     res.json({ success: true, message: 'AI reply generated and sent successfully to the user!' });
   } catch (error) {
     console.error('Email error:', error);
-    res.status(500).json({ message: 'Failed to send email. Please check your email credentials and ensure Less Secure Apps or App Passwords are configured.' });
+    res.status(500).json({ message: `Failed to send email: ${error.message}` });
   }
 });
 
