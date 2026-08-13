@@ -26,17 +26,43 @@ function createNodemailerTransporter() {
 }
 
 /**
- * Send email using Resend (HTTPS API - works on Render) if RESEND_API_KEY is present,
- * otherwise fall back to Nodemailer SMTP.
+ * Send email using:
+ * 1. Brevo HTTP API (if BREVO_API_KEY set) - Can send to ANY email address without domain restriction
+ * 2. Resend HTTP API (if RESEND_API_KEY set) - Testing mode restricts to account owner's email
+ * 3. Nodemailer SMTP (if EMAIL_USER/EMAIL_PASS set) - Standard SMTP fallback
  */
 async function sendEmail({ to, subject, html, text }) {
+  // ── 1. BREVO HTTP API (Recommended for unrestricted free sending) ──────────
+  if (process.env.BREVO_API_KEY) {
+    console.log(`📧 Sending email via Brevo HTTP API to: ${to}`);
+    const senderEmail = process.env.EMAIL_USER || 'vishwajeetbankingpoint@gmail.com';
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'api-key': process.env.BREVO_API_KEY,
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        sender: { name: 'Vishwajeet Banking Point', email: senderEmail },
+        to: [{ email: to }],
+        subject,
+        htmlContent: html,
+        textContent: text
+      })
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(`Brevo Error (${response.status}): ${data.message || JSON.stringify(data)}`);
+    }
+    return data;
+  }
+
+  // ── 2. RESEND HTTP API ─────────────────────────────────────────────────────
   const resend = getResendClient();
-
   if (resend) {
-    // Determine the 'from' address
-    // Resend requires a verified domain or 'onboarding@resend.dev' for free tier testing
     const fromAddress = process.env.RESEND_FROM || 'Vishwajeet Banking Point <onboarding@resend.dev>';
-
     console.log(`📧 Sending email via Resend API to: ${to}`);
     const response = await resend.emails.send({
       from: fromAddress,
@@ -52,7 +78,7 @@ async function sendEmail({ to, subject, html, text }) {
     return response;
   }
 
-  // Fallback: Nodemailer SMTP
+  // ── 3. NODEMAILER SMTP ────────────────────────────────────────────────────
   if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
     console.log(`📧 Sending email via Nodemailer SMTP to: ${to}`);
     const transporter = createNodemailerTransporter();
@@ -67,7 +93,7 @@ async function sendEmail({ to, subject, html, text }) {
     });
   }
 
-  throw new Error('No email credentials configured. Please set RESEND_API_KEY or EMAIL_USER & EMAIL_PASS in environment variables.');
+  throw new Error('No email service configured. Set BREVO_API_KEY, RESEND_API_KEY, or EMAIL_USER/EMAIL_PASS in environment variables.');
 }
 
 module.exports = { sendEmail };
