@@ -4,13 +4,8 @@ const multer = require('multer');
 const path = require('path');
 const auth = require('../middleware/auth');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'),
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  }
-});
+// Use memory storage — works on both local AND Vercel (no persistent disk)
+const storage = multer.memoryStorage();
 
 const upload = multer({ 
   storage,
@@ -23,16 +18,26 @@ const upload = multer({
   }
 });
 
+// ── Protected upload (admin images etc.) ──────────────────────────────────────
 router.post('/', auth, upload.single('file'), (req, res) => {
   if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
-  const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-  res.json({ url: fileUrl });
+
+  // Return base64 data URL (works without a persistent filesystem)
+  const mimeType = req.file.mimetype;
+  const base64 = req.file.buffer.toString('base64');
+  const dataUrl = `data:${mimeType};base64,${base64}`;
+  res.json({ url: dataUrl });
 });
 
+// ── Public upload (resumes from career form) ─────────────────────────────────
 router.post('/public', upload.single('file'), (req, res) => {
   if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
-  const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-  res.json({ url: fileUrl });
+
+  // Return base64 data URL (works without a persistent filesystem)
+  const mimeType = req.file.mimetype;
+  const base64 = req.file.buffer.toString('base64');
+  const dataUrl = `data:${mimeType};base64,${base64}`;
+  res.json({ url: dataUrl });
 });
 
 module.exports = router;

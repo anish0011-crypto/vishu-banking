@@ -15,7 +15,7 @@ router.post('/jobs', async (req, res) => {
     res.json({ msg: 'Application submitted successfully' });
 
     // Fire emails in a fully isolated async block
-    if (process.env.RESEND_API_KEY || (process.env.EMAIL_USER && process.env.EMAIL_PASS)) {
+    if (process.env.BREVO_API_KEY || process.env.RESEND_API_KEY || (process.env.EMAIL_USER && process.env.EMAIL_PASS)) {
       (async () => {
         try {
           const { name, email, mobile, address, pincode, resumeUrl, aboutYourself } = req.body;
@@ -174,7 +174,7 @@ router.post('/contact', async (req, res) => {
     res.json({ msg: 'Message sent successfully' });
 
     // Fire emails in a fully isolated async block
-    if (process.env.RESEND_API_KEY || (process.env.EMAIL_USER && process.env.EMAIL_PASS)) {
+    if (process.env.BREVO_API_KEY || process.env.RESEND_API_KEY || (process.env.EMAIL_USER && process.env.EMAIL_PASS)) {
       (async () => {
         try {
           const { name, email, mobile, subject, message: userMessage } = req.body;
