@@ -39,6 +39,7 @@ app.get('/api/debug-email', async (req, res) => {
     EMAIL_USER: process.env.EMAIL_USER || 'NOT SET',
     EMAIL_PASS: process.env.EMAIL_PASS ? `SET (${process.env.EMAIL_PASS.length} chars)` : 'NOT SET',
     ADMIN_EMAIL: process.env.ADMIN_EMAIL || 'NOT SET',
+    SENDGRID_API_KEY: process.env.SENDGRID_API_KEY ? 'SET' : 'NOT SET',
     BREVO_API_KEY: process.env.BREVO_API_KEY ? 'SET' : 'NOT SET',
     RESEND_API_KEY: process.env.RESEND_API_KEY ? 'SET' : 'NOT SET',
   };
