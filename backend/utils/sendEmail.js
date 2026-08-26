@@ -12,14 +12,19 @@ function getResendClient() {
 
 function createNodemailerTransporter() {
   return nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // SSL port 465 (works on Render, Vercel, AWS)
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS
     },
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 15000
+    tls: {
+      rejectUnauthorized: false
+    },
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 20000
   });
 }
 
@@ -27,7 +32,7 @@ function createNodemailerTransporter() {
  * Send email using:
  * 1. Brevo HTTP API (if BREVO_API_KEY set) - Can send to ANY email address without domain restriction
  * 2. Resend HTTP API (if RESEND_API_KEY set)
- * 3. Nodemailer SMTP (if EMAIL_USER/EMAIL_PASS set)
+ * 3. Nodemailer SMTP on Port 465 SSL (if EMAIL_USER/EMAIL_PASS set)
  */
 async function sendEmail({ to, subject, html, text }) {
   // ── 1. BREVO HTTP API ──────────────────────────────────────────────────────
@@ -76,9 +81,9 @@ async function sendEmail({ to, subject, html, text }) {
     return response;
   }
 
-  // ── 3. NODEMAILER SMTP ────────────────────────────────────────────────────
+  // ── 3. NODEMAILER SMTP (PORT 465 SSL) ─────────────────────────────────────
   if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-    console.log(`📧 Sending email via Gmail Nodemailer to: ${to}`);
+    console.log(`📧 Sending email via Gmail Nodemailer (Port 465 SSL) to: ${to}`);
     const transporter = createNodemailerTransporter();
     const fromAddress = `"Vishwajeet Banking Point" <${process.env.EMAIL_USER}>`;
 
