@@ -10,16 +10,41 @@ function getResendClient() {
 
 /**
  * Send email using (in priority order):
- * 1. SendGrid HTTP API   — if SENDGRID_API_KEY is set (works on Render free tier)
- * 2. Brevo HTTP API      — if BREVO_API_KEY is set (works on Render free tier)
- * 3. Resend HTTP API     — if RESEND_API_KEY is set (requires domain for non-owner emails)
- * 4. Nodemailer Gmail    — if EMAIL_USER/EMAIL_PASS set (blocked on Render free tier)
+ * 1. Nodemailer Gmail    — if EMAIL_USER/EMAIL_PASS set (PRIMARY - verified sender)
+ * 2. SendGrid HTTP API   — if SENDGRID_API_KEY is set (fallback)
+ * 3. Brevo HTTP API      — if BREVO_API_KEY is set (fallback)
+ * 4. Resend HTTP API     — if RESEND_API_KEY is set (fallback)
  */
 async function sendEmail({ to, subject, html, text }) {
   const senderName = 'Vishwajeet Banking Point';
   const senderEmail = process.env.EMAIL_USER || 'vishwajeetbankingpoint@gmail.com';
 
-  // ── 1. SENDGRID HTTP API (Best for Render free tier) ──────────────────────
+  // ── 1. NODEMAILER GMAIL SMTP (PRIMARY - uses verified Gmail app password) ──
+  if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+    console.log(`📧 Sending email via Gmail Nodemailer to: ${to}`);
+    try {
+      const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+        tls: { rejectUnauthorized: false },
+        connectionTimeout: 15000,
+        socketTimeout: 20000
+      });
+      const result = await transporter.sendMail({
+        from: `"${senderName}" <${senderEmail}>`,
+        to, subject, html, text: text || 'Vishwajeet Banking Point Notification'
+      });
+      console.log(`✅ Gmail SMTP success: ${result.messageId}`);
+      return result;
+    } catch (gmailErr) {
+      console.error(`⚠️ Gmail SMTP failed: ${gmailErr.message}. Trying SendGrid fallback...`);
+      // Fall through to SendGrid
+    }
+  }
+
+  // ── 2. SENDGRID HTTP API (fallback) ───────────────────────────────────────
   if (process.env.SENDGRID_API_KEY) {
     console.log(`📧 Sending email via SendGrid HTTP API to: ${to}`);
     const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
@@ -46,7 +71,7 @@ async function sendEmail({ to, subject, html, text }) {
     return { provider: 'sendgrid', status: response.status };
   }
 
-  // ── 2. BREVO HTTP API ──────────────────────────────────────────────────────
+  // ── 3. BREVO HTTP API ──────────────────────────────────────────────────────
   if (process.env.BREVO_API_KEY) {
     console.log(`📧 Sending email via Brevo HTTP API to: ${to}`);
     const response = await fetch('https://api.brevo.com/v3/smtp/email', {
@@ -69,7 +94,7 @@ async function sendEmail({ to, subject, html, text }) {
     return data;
   }
 
-  // ── 3. RESEND HTTP API ─────────────────────────────────────────────────────
+  // ── 4. RESEND HTTP API ─────────────────────────────────────────────────────
   const resend = getResendClient();
   if (resend) {
     const fromAddress = process.env.RESEND_FROM || `${senderName} <onboarding@resend.dev>`;
@@ -79,25 +104,7 @@ async function sendEmail({ to, subject, html, text }) {
     return response;
   }
 
-  // ── 4. NODEMAILER GMAIL SMTP (may be blocked on Render free tier) ─────────
-  if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-    console.log(`📧 Sending email via Gmail Nodemailer to: ${to}`);
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-      tls: { rejectUnauthorized: false },
-      connectionTimeout: 15000,
-      socketTimeout: 20000
-    });
-    return await transporter.sendMail({
-      from: `"${senderName}" <${senderEmail}>`,
-      to, subject, html, text: text || 'Vishwajeet Banking Point Notification'
-    });
-  }
-
-  throw new Error('No email provider configured. Set SENDGRID_API_KEY, BREVO_API_KEY, RESEND_API_KEY, or EMAIL_USER/EMAIL_PASS.');
+  throw new Error('No email provider configured. Set EMAIL_USER/EMAIL_PASS, SENDGRID_API_KEY, BREVO_API_KEY, or RESEND_API_KEY.');
 }
 
 module.exports = { sendEmail };
