@@ -65,17 +65,11 @@ async function sendEmail({ to, subject, html, text }) {
           { type: 'text/plain', value: text || 'Vishwajeet Banking Point Notification' },
           { type: 'text/html', value: html }
         ],
-        // Transactional email settings — improves inbox delivery
-        mail_settings: {
-          bypass_spam_management: { enable: true },
-          bypass_bounce_management: { enable: true }
-        },
+        categories: ['transactional'],
         tracking_settings: {
           click_tracking: { enable: false },
-          open_tracking: { enable: false },
-          subscription_tracking: { enable: false }
-        },
-        categories: ['transactional']
+          open_tracking: { enable: false }
+        }
       })
     });
 
