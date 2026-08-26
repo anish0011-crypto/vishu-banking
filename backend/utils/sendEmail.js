@@ -12,27 +12,25 @@ function getResendClient() {
 
 function createNodemailerTransporter() {
   return nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
+    service: 'gmail',
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS
     },
-    tls: {
-      rejectUnauthorized: false
-    }
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000
   });
 }
 
 /**
  * Send email using:
  * 1. Brevo HTTP API (if BREVO_API_KEY set) - Can send to ANY email address without domain restriction
- * 2. Resend HTTP API (if RESEND_API_KEY set) - Testing mode restricts to account owner's email
- * 3. Nodemailer SMTP (if EMAIL_USER/EMAIL_PASS set) - Standard SMTP fallback
+ * 2. Resend HTTP API (if RESEND_API_KEY set)
+ * 3. Nodemailer SMTP (if EMAIL_USER/EMAIL_PASS set)
  */
 async function sendEmail({ to, subject, html, text }) {
-  // ── 1. BREVO HTTP API (Recommended for unrestricted free sending) ──────────
+  // ── 1. BREVO HTTP API ──────────────────────────────────────────────────────
   if (process.env.BREVO_API_KEY) {
     console.log(`📧 Sending email via Brevo HTTP API to: ${to}`);
     const senderEmail = process.env.EMAIL_USER || 'vishwajeetbankingpoint@gmail.com';
@@ -48,7 +46,7 @@ async function sendEmail({ to, subject, html, text }) {
         to: [{ email: to }],
         subject,
         htmlContent: html,
-        textContent: text
+        textContent: text || 'Vishwajeet Banking Point Notification'
       })
     });
 
@@ -69,7 +67,7 @@ async function sendEmail({ to, subject, html, text }) {
       to,
       subject,
       html,
-      text
+      text: text || 'Vishwajeet Banking Point Notification'
     });
 
     if (response.error) {
@@ -80,7 +78,7 @@ async function sendEmail({ to, subject, html, text }) {
 
   // ── 3. NODEMAILER SMTP ────────────────────────────────────────────────────
   if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-    console.log(`📧 Sending email via Nodemailer SMTP to: ${to}`);
+    console.log(`📧 Sending email via Gmail Nodemailer to: ${to}`);
     const transporter = createNodemailerTransporter();
     const fromAddress = `"Vishwajeet Banking Point" <${process.env.EMAIL_USER}>`;
 
@@ -89,11 +87,11 @@ async function sendEmail({ to, subject, html, text }) {
       to,
       subject,
       html,
-      text
+      text: text || 'Vishwajeet Banking Point Notification'
     });
   }
 
-  throw new Error('No email service configured. Set BREVO_API_KEY, RESEND_API_KEY, or EMAIL_USER/EMAIL_PASS in environment variables.');
+  throw new Error('No email service configured. Set EMAIL_USER & EMAIL_PASS, BREVO_API_KEY, or RESEND_API_KEY in environment variables.');
 }
 
 module.exports = { sendEmail };

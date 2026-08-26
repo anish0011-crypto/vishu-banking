@@ -11,19 +11,16 @@ router.post('/jobs', async (req, res) => {
     const application = new JobApplication(req.body);
     await application.save();
 
-    // Respond immediately — don't wait for emails
-    res.json({ msg: 'Application submitted successfully' });
+    const { name, email, mobile, address, pincode, resumeUrl, aboutYourself } = req.body;
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'vishwajeetbankingpoint@gmail.com';
+    const submittedAt = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
-    // Fire emails in a fully isolated async block
+    // Send emails BEFORE responding (Crucial for Vercel/Serverless execution)
     if (process.env.BREVO_API_KEY || process.env.RESEND_API_KEY || (process.env.EMAIL_USER && process.env.EMAIL_PASS)) {
-      (async () => {
-        try {
-          const { name, email, mobile, address, pincode, resumeUrl, aboutYourself } = req.body;
-          const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'vishwajeetbankingpoint@gmail.com';
-          const submittedAt = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+      const emailPromises = [];
 
-          // ── 1. Admin Notification ────────────────────────────────────────
-          const adminHtml = `<!DOCTYPE html>
+      // ── 1. Admin Notification ────────────────────────────────────────
+      const adminHtml = `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8"/>
@@ -76,16 +73,18 @@ router.post('/jobs', async (req, res) => {
 </body>
 </html>`;
 
-          await sendEmail({
-            to: adminEmail,
-            subject: `📋 New Job Application — ${name || 'Unknown Applicant'}`,
-            html: adminHtml
-          });
-          console.log('✅ Admin job notification sent to:', adminEmail);
+      emailPromises.push(
+        sendEmail({
+          to: adminEmail,
+          subject: `📋 New Job Application — ${name || 'Unknown Applicant'}`,
+          html: adminHtml
+        }).then(() => console.log('✅ Admin job notification sent to:', adminEmail))
+          .catch(err => console.error('❌ Admin job email error:', err.message))
+      );
 
-          // ── 2. Applicant Confirmation ────────────────────────────────────
-          if (email) {
-            const applicantHtml = `<!DOCTYPE html>
+      // ── 2. Applicant Confirmation ────────────────────────────────────
+      if (email && email.includes('@')) {
+        const applicantHtml = `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8"/>
@@ -145,22 +144,24 @@ router.post('/jobs', async (req, res) => {
 </body>
 </html>`;
 
-            await sendEmail({
-              to: email,
-              subject: `✅ Application Received — Vishwajeet Banking Point`,
-              html: applicantHtml
-            });
-            console.log('✅ Applicant confirmation sent to:', email);
-          }
-        } catch (emailErr) {
-          console.error('❌ Job application email error:', emailErr.message);
-        }
-      })();
+        emailPromises.push(
+          sendEmail({
+            to: email,
+            subject: `✅ Application Received — Vishwajeet Banking Point`,
+            html: applicantHtml
+          }).then(() => console.log('✅ Applicant confirmation sent to:', email))
+            .catch(err => console.error('❌ Applicant confirmation email error:', err.message))
+        );
+      }
+
+      // Wait for emails to finish sending before closing response
+      await Promise.allSettled(emailPromises);
     }
 
+    return res.json({ msg: 'Application submitted successfully' });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
+    console.error('Job application submission error:', err.message);
+    return res.status(500).json({ error: 'Server error', details: err.message });
   }
 });
 
@@ -170,19 +171,16 @@ router.post('/contact', async (req, res) => {
     const message = new ContactMessage(req.body);
     await message.save();
 
-    // Respond immediately — don't wait for emails
-    res.json({ msg: 'Message sent successfully' });
+    const { name, email, mobile, subject, message: userMessage } = req.body;
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'vishwajeetbankingpoint@gmail.com';
+    const submittedAt = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
-    // Fire emails in a fully isolated async block
+    // Send emails BEFORE responding (Crucial for Vercel/Serverless execution)
     if (process.env.BREVO_API_KEY || process.env.RESEND_API_KEY || (process.env.EMAIL_USER && process.env.EMAIL_PASS)) {
-      (async () => {
-        try {
-          const { name, email, mobile, subject, message: userMessage } = req.body;
-          const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'vishwajeetbankingpoint@gmail.com';
-          const submittedAt = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+      const emailPromises = [];
 
-          // ── 1. Admin Notification ────────────────────────────────────────
-          const adminHtml = `<!DOCTYPE html>
+      // ── 1. Admin Notification ────────────────────────────────────────
+      const adminHtml = `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8"/>
@@ -233,16 +231,18 @@ router.post('/contact', async (req, res) => {
 </body>
 </html>`;
 
-          await sendEmail({
-            to: adminEmail,
-            subject: `📬 New Contact: ${name} — ${subject || 'General Inquiry'}`,
-            html: adminHtml
-          });
-          console.log('✅ Admin contact notification sent to:', adminEmail);
+      emailPromises.push(
+        sendEmail({
+          to: adminEmail,
+          subject: `📬 New Contact: ${name || 'User'} — ${subject || 'General Inquiry'}`,
+          html: adminHtml
+        }).then(() => console.log('✅ Admin contact notification sent to:', adminEmail))
+          .catch(err => console.error('❌ Admin contact email error:', err.message))
+      );
 
-          // ── 2. User Auto-Reply ───────────────────────────────────────────
-          if (email) {
-            const userReplyHtml = `<!DOCTYPE html>
+      // ── 2. User Auto-Reply ───────────────────────────────────────────
+      if (email && email.includes('@')) {
+        const userReplyHtml = `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8"/>
@@ -300,26 +300,26 @@ router.post('/contact', async (req, res) => {
 </body>
 </html>`;
 
-            await sendEmail({
-              to: email,
-              subject: `✅ We received your message — ${subject || 'Your Inquiry to Vishwajeet Banking Point'}`,
-              html: userReplyHtml
-            });
-
-            // Update contact message status to Replied
-            const saved = await ContactMessage.findById(message._id);
-            if (saved) { saved.status = 'Replied'; await saved.save(); }
+        emailPromises.push(
+          sendEmail({
+            to: email,
+            subject: `✅ We received your message — ${subject || 'Your Inquiry to Vishwajeet Banking Point'}`,
+            html: userReplyHtml
+          }).then(async () => {
             console.log('✅ User auto-reply sent to:', email);
-          }
-        } catch (emailErr) {
-          console.error('❌ Contact email error:', emailErr.message);
-        }
-      })();
+            await ContactMessage.findByIdAndUpdate(message._id, { status: 'Replied' });
+          }).catch(err => console.error('❌ User auto-reply email error:', err.message))
+        );
+      }
+
+      // Wait for emails to finish sending before closing response
+      await Promise.allSettled(emailPromises);
     }
 
+    return res.json({ msg: 'Message sent successfully' });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
+    console.error('Contact message submission error:', err.message);
+    return res.status(500).json({ error: 'Server error', details: err.message });
   }
 });
 
