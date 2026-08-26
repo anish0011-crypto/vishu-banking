@@ -29,12 +29,12 @@ async function sendEmail({ to, subject, html, text }) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        personalizations: [{ to: [{ email: to }] }],
         from: { email: senderEmail, name: senderName },
-        to: [{ email: to }],
         subject,
         content: [
-          { type: 'text/html', value: html },
-          { type: 'text/plain', value: text || 'Vishwajeet Banking Point Notification' }
+          { type: 'text/plain', value: text || 'Vishwajeet Banking Point Notification' },
+          { type: 'text/html', value: html }
         ]
       })
     });
