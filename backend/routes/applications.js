@@ -16,7 +16,7 @@ router.post('/jobs', async (req, res) => {
     const submittedAt = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
     // Send emails BEFORE responding (Crucial for Vercel/Serverless execution)
-    if (process.env.BREVO_API_KEY || process.env.RESEND_API_KEY || (process.env.EMAIL_USER && process.env.EMAIL_PASS)) {
+    if (process.env.SENDGRID_API_KEY || process.env.BREVO_API_KEY || process.env.RESEND_API_KEY || (process.env.EMAIL_USER && process.env.EMAIL_PASS)) {
       const emailPromises = [];
 
       // ── 1. Admin Notification ────────────────────────────────────────
@@ -176,7 +176,7 @@ router.post('/contact', async (req, res) => {
     const submittedAt = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
     // Send emails BEFORE responding (Crucial for Vercel/Serverless execution)
-    if (process.env.BREVO_API_KEY || process.env.RESEND_API_KEY || (process.env.EMAIL_USER && process.env.EMAIL_PASS)) {
+    if (process.env.SENDGRID_API_KEY || process.env.BREVO_API_KEY || process.env.RESEND_API_KEY || (process.env.EMAIL_USER && process.env.EMAIL_PASS)) {
       const emailPromises = [];
 
       // ── 1. Admin Notification ────────────────────────────────────────
