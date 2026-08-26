@@ -32,6 +32,30 @@ app.use('/api/applications', applicationsRoutes);
 // ── Health check ──────────────────────────────────────────────────────────────
 app.get('/', (req, res) => res.json({ status: 'ok', message: 'Vishwajeet Banking Point API' }));
 
+// ── Debug email test (temporary) ──────────────────────────────────────────────
+app.get('/api/debug-email', async (req, res) => {
+  const { sendEmail } = require('./utils/sendEmail');
+  const config = {
+    EMAIL_USER: process.env.EMAIL_USER || 'NOT SET',
+    EMAIL_PASS: process.env.EMAIL_PASS ? `SET (${process.env.EMAIL_PASS.length} chars)` : 'NOT SET',
+    ADMIN_EMAIL: process.env.ADMIN_EMAIL || 'NOT SET',
+    BREVO_API_KEY: process.env.BREVO_API_KEY ? 'SET' : 'NOT SET',
+    RESEND_API_KEY: process.env.RESEND_API_KEY ? 'SET' : 'NOT SET',
+  };
+
+  try {
+    const result = await sendEmail({
+      to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'vishwajeetbankingpoint@gmail.com',
+      subject: 'Render Debug Email Test',
+      html: '<h2>Email test from Render backend</h2><p>This confirms email sending works!</p>',
+      text: 'Email test from Render backend - working!'
+    });
+    res.json({ success: true, config, smtpResponse: result?.response || result?.messageId || 'sent' });
+  } catch (err) {
+    res.json({ success: false, config, error: err.message, stack: err.stack?.split('\n').slice(0,5) });
+  }
+});
+
 // ── Connect to MongoDB ────────────────────────────────────────────────────────
 const seedDatabase = require('./seed-admin');
 
