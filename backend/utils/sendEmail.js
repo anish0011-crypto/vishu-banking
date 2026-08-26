@@ -29,8 +29,8 @@ async function sendEmail({ to, subject, html, text }) {
         secure: true,
         auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
         tls: { rejectUnauthorized: false },
-        connectionTimeout: 15000,
-        socketTimeout: 20000
+        connectionTimeout: 5000,   // 5s — fast fail on Render (SMTP blocked)
+        socketTimeout: 8000
       });
       const result = await transporter.sendMail({
         from: `"${senderName}" <${senderEmail}>`,
@@ -66,8 +66,10 @@ async function sendEmail({ to, subject, html, text }) {
 
     if (!response.ok) {
       const errBody = await response.text();
+      console.error(`❌ SendGrid failed (${response.status}): ${errBody}`);
       throw new Error(`SendGrid Error (${response.status}): ${errBody}`);
     }
+    console.log(`✅ SendGrid success! Status: ${response.status} → ${to}`);
     return { provider: 'sendgrid', status: response.status };
   }
 
